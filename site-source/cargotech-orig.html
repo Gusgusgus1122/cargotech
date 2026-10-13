@@ -1,0 +1,562 @@
+<title>CargoTech</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Secular+One&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout concept: dark ink hero band with a light quote card pinned beside the headline (RTL, text on the right).
+   Every section ends in one orange action. Orange is used only for actions, so it always means "press here". */
+:root {
+  --bg: #F2F5F8;
+  --surface: #FFFFFF;
+  --fg: #0B1F33;
+  --muted: #51647A;
+  --line: #D5DEE7;
+  --ink: #0B1F33;
+  --ink-2: #13304D;
+  --on-ink: #EAF1F7;
+  --on-ink-muted: #A9BCCF;
+  --accent: #FF6B2C;
+  --accent-hover: #FF8248;
+  --on-accent: #0B1F33;
+  --sea: #1B6A8A;
+  --sea-soft: #DCEBF2;
+  --ok: #1F8A5B;
+  --font-display: "Secular One", "Assistant", "Arial Hebrew", Arial, sans-serif;
+  --font-body: "Assistant", "Arial Hebrew", Arial, sans-serif;
+  --font-code: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #08141F; --surface: #0F2133; --fg: #E6EEF5; --muted: #9FB3C8; --line: #1E3A54;
+    --ink: #050E16; --ink-2: #0C2034; --sea: #63B6D6; --sea-soft: #10303F; --ok: #4CC18A;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #08141F; --surface: #0F2133; --fg: #E6EEF5; --muted: #9FB3C8; --line: #1E3A54;
+  --ink: #050E16; --ink-2: #0C2034; --sea: #63B6D6; --sea-soft: #10303F; --ok: #4CC18A;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 17px; line-height: 1.6; direction: rtl; text-align: right; }
+.skip { position: absolute; inset-inline-start: 16px; top: -80px; z-index: 50; background: var(--accent); color: var(--on-accent); padding: 12px 18px; border-radius: 8px; font-weight: 800; text-decoration: none; }
+.skip:focus { top: 12px; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.2; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.wrap { width: min(1120px, 100%); margin-inline: auto; padding-inline: 16px; }
+.latin { font-family: var(--font-code); direction: ltr; unicode-bidi: isolate; letter-spacing: 0.02em; }
+
+/* Buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 12px 26px; border-radius: 10px; border: 2px solid transparent; font: 800 1.05rem/1.2 var(--font-body); cursor: pointer; text-decoration: none; transition: transform .15s, background .15s; }
+.btn-go { background: var(--accent); color: var(--on-accent); }
+.btn-go:hover { background: var(--accent-hover); transform: translateY(-2px); }
+.btn-line { background: transparent; color: var(--on-ink); border-color: rgba(234, 241, 247, .45); }
+.btn-line:hover { border-color: var(--on-ink); }
+.btn-line-dark { background: transparent; color: var(--fg); border-color: var(--line); }
+.btn-line-dark:hover { border-color: var(--sea); }
+.btn-sm { min-height: 44px; padding: 8px 18px; font-size: .95rem; }
+
+/* Header */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--ink); color: var(--on-ink); border-bottom: 1px solid var(--ink-2); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--font-display); font-size: 1.5rem; letter-spacing: .01em; }
+.brand svg { width: 34px; height: 34px; flex: none; }
+.nav { display: flex; align-items: center; gap: 26px; }
+.nav a.nl { text-decoration: none; font-weight: 600; color: var(--on-ink-muted); }
+.nav a.nl:hover { color: var(--on-ink); }
+.top-phone { font-weight: 700; color: var(--on-ink); text-decoration: none; }
+
+/* Hero */
+.hero { background:
+    repeating-linear-gradient(90deg, transparent 0 79px, rgba(169, 188, 207, .07) 79px 80px),
+    repeating-linear-gradient(0deg, transparent 0 79px, rgba(169, 188, 207, .07) 79px 80px),
+    var(--ink);
+  color: var(--on-ink); padding-block: 56px 64px; }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 48px; align-items: start; }
+.beat { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-bottom: 22px; font-weight: 800; color: var(--accent); font-size: 1rem; letter-spacing: .02em; }
+.beat span + span::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--on-ink-muted); margin-inline-end: 18px; vertical-align: middle; }
+.hero h1 { font-size: clamp(2.2rem, 5.4vw, 3.7rem); }
+.hero .sub { margin-top: 20px; font-size: 1.2rem; color: var(--on-ink-muted); max-width: 34em; }
+.hero .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+.hero .reassure { margin-top: 18px; font-size: .95rem; color: var(--on-ink-muted); }
+
+/* Quote card */
+.qcard { background: var(--surface); color: var(--fg); border-radius: 14px; padding: 26px; border: 1px solid var(--line); box-shadow: 0 18px 40px rgba(0, 0, 0, .28); }
+.qcard h2 { font-size: 1.5rem; }
+.qcard .hint { color: var(--muted); font-size: .95rem; margin-top: 4px; }
+.qform { display: grid; gap: 14px; margin-top: 18px; }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field label { font-weight: 700; font-size: .92rem; }
+.field input, .field select { width: 100%; min-height: 48px; padding: 10px 12px; border: 1.5px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--fg); font: 600 1rem var(--font-body); }
+.field input:focus, .field select:focus { border-color: var(--sea); outline: none; box-shadow: 0 0 0 3px var(--sea-soft); }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.qform .btn { width: 100%; }
+.qnote { font-size: .88rem; color: var(--muted); }
+
+/* Carriers */
+.carriers { background: var(--surface); border-bottom: 1px solid var(--line); }
+.carriers .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 34px; padding-block: 20px; }
+.carriers .lead { font-weight: 700; color: var(--muted); }
+.carriers .names { display: flex; flex-wrap: wrap; gap: 8px 28px; font-weight: 800; font-size: 1.15rem; letter-spacing: .03em; }
+
+/* Section rhythm */
+.sec { padding-block: 72px; }
+.sec-head { display: grid; gap: 12px; max-width: 40em; margin-bottom: 36px; }
+.sec-head h2 { font-size: clamp(1.7rem, 3.6vw, 2.5rem); }
+.sec-head p { color: var(--muted); font-size: 1.1rem; }
+
+/* Dictionary */
+.dict { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.term { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 22px; display: grid; gap: 10px; align-content: start; }
+.term .w { font-family: var(--font-display); font-size: 1.4rem; color: var(--sea); }
+.term .w.latin { font-family: var(--font-code); font-size: 1.15rem; font-weight: 500; }
+.term p { color: var(--fg); }
+.ask { justify-self: start; display: inline-flex; align-items: center; min-height: 44px; background: none; border: 0; padding: 0; font: 700 .95rem var(--font-body); color: var(--sea); cursor: pointer; text-decoration: underline; text-underline-offset: 4px; }
+.ask:hover { color: var(--fg); }
+.dict-after { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; margin-top: 30px; padding: 22px 24px; background: var(--sea-soft); border-radius: 12px; }
+.dict-after p { flex: 1 1 300px; font-weight: 700; font-size: 1.1rem; }
+
+/* Services */
+.services { background: var(--surface); border-block: 1px solid var(--line); }
+.svc-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.svc { padding: 28px 26px; display: grid; gap: 10px; align-content: start; background: var(--surface); border-inline-start: 1px solid var(--line); border-block-end: 1px solid var(--line); }
+.svc h3 { font-size: 1.35rem; }
+.svc p { color: var(--muted); }
+.svc .go { justify-self: start; margin-top: 6px; background: none; border: 0; padding: 0; font: 800 1rem var(--font-body); color: var(--fg); cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+.svc .go::after { content: "←"; color: var(--accent); font-size: 1.2rem; transition: transform .15s; }
+.svc .go:hover::after { transform: translateX(-4px); }
+.svc .tag { font-size: .8rem; font-weight: 800; letter-spacing: .06em; color: var(--ok); }
+
+/* Steps */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; counter-reset: s; }
+.steps li { counter-increment: s; padding: 0 22px 0 0; border-inline-start: 2px solid var(--line); margin-inline-end: 22px; display: grid; gap: 8px; align-content: start; }
+.steps li::before { content: counter(s); font-family: var(--font-display); font-size: 2.6rem; line-height: 1; color: var(--accent); }
+.steps h3 { font-size: 1.25rem; }
+.steps p { color: var(--muted); }
+.steps li:last-child { border-inline-start-color: var(--accent); }
+
+/* Destinations */
+.dest { background: var(--ink); color: var(--on-ink); }
+.dest .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+.dest h2 { font-size: clamp(1.7rem, 3.6vw, 2.5rem); }
+.dest p { color: var(--on-ink-muted); margin-top: 14px; font-size: 1.1rem; }
+.dest ul { margin: 22px 0 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+.dest li { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: baseline; }
+.dest li::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); transform: translateY(1px); }
+.dest .btn { margin-top: 28px; }
+.routemap { width: 100%; height: auto; max-width: 100%; }
+.routemap .lbl { fill: var(--on-ink); font: 700 15px var(--font-body); }
+.routemap .sub { fill: var(--on-ink-muted); font: 500 12px var(--font-body); }
+.routemap .node { fill: var(--accent); }
+.routemap .node-ring { fill: none; stroke: var(--accent); stroke-width: 1.5; opacity: .5; }
+.routemap .path { fill: none; stroke: var(--on-ink-muted); stroke-width: 1.6; stroke-dasharray: 3 7; stroke-linecap: round; }
+.routemap .pkg { fill: var(--on-ink); }
+
+/* FDA block */
+.fda { display: grid; grid-template-columns: auto 1fr auto; gap: 24px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 26px 28px; border-inline-start: 6px solid var(--ok); }
+.fda .badge { font-family: var(--font-code); font-weight: 500; font-size: 1.05rem; color: var(--ok); border: 1.5px solid var(--ok); border-radius: 8px; padding: 6px 12px; direction: ltr; }
+.fda h3 { font-size: 1.4rem; }
+.fda p { color: var(--muted); margin-top: 4px; }
+
+/* FAQ */
+.faq { display: grid; gap: 10px; max-width: 52em; }
+.faq details { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+.faq summary { cursor: pointer; padding: 18px 20px; font-weight: 800; font-size: 1.08rem; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-size: 1.6rem; line-height: 1; color: var(--accent); font-weight: 400; flex: none; }
+.faq details[open] summary::after { content: "−"; }
+.faq .ans { padding: 0 20px 20px; color: var(--muted); font-size: 1.05rem; }
+.faq-cta { margin-top: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px; }
+.faq-cta p { font-weight: 700; }
+
+/* Final CTA */
+.final { background: var(--ink); color: var(--on-ink); padding-block: 72px; }
+.final .wrap { display: grid; gap: 22px; justify-items: start; }
+.final h2 { font-size: clamp(1.9rem, 4.4vw, 3rem); max-width: 18em; }
+.final p { color: var(--on-ink-muted); font-size: 1.15rem; max-width: 34em; }
+.final .cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.contact-lines { display: flex; flex-wrap: wrap; gap: 8px 32px; margin-top: 10px; font-weight: 700; }
+.contact-lines span { color: var(--on-ink-muted); font-weight: 600; margin-inline-end: 8px; }
+
+footer { background: var(--ink); color: var(--on-ink-muted); border-top: 1px solid var(--ink-2); padding-block: 22px; font-size: .92rem; }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
+
+/* Mobile action bar */
+.bar { display: none; position: fixed; inset-inline: 0; bottom: 0; z-index: 30; background: var(--ink); border-top: 1px solid var(--ink-2); padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px)); gap: 10px; }
+.bar .btn { flex: 1; min-height: 48px; padding: 8px 12px; }
+
+@media (max-width: 900px) {
+  .hero .wrap, .dest .wrap { grid-template-columns: minmax(0, 1fr); gap: 36px; }
+  .dict { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .svc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 32px; }
+  .fda { grid-template-columns: minmax(0, 1fr); }
+  .fda .badge { justify-self: start; }
+  .nav a.nl { display: none; }
+}
+@media (max-width: 600px) {
+  body { font-size: 16px; padding-bottom: 76px; }
+  .sec { padding-block: 52px; }
+  .hero { padding-block: 36px 44px; }
+  .dict, .svc-grid, .steps { grid-template-columns: minmax(0, 1fr); }
+  .row2 { grid-template-columns: minmax(0, 1fr); }
+  .top-phone { display: none; }
+  .qcard { padding: 20px; }
+  .bar { display: flex; }
+  .hero .cta-row .btn { flex: 1 1 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .btn, .svc .go::after { transition: none; }
+}
+</style>
+
+<div dir="rtl" lang="he">
+<a class="skip" href="#top">דלגו לתוכן הראשי</a>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="CargoTech">
+      <svg viewBox="0 0 34 34" aria-hidden="true"><rect x="2" y="2" width="30" height="30" rx="7" fill="#FF6B2C"/><path d="M8 13l9-5 9 5v10l-9 5-9-5z" fill="none" stroke="#0B1F33" stroke-width="2.2" stroke-linejoin="round"/><path d="M8 13l9 5 9-5M17 18v10" fill="none" stroke="#0B1F33" stroke-width="2.2" stroke-linejoin="round"/></svg>
+      <span>CargoTech</span>
+    </a>
+    <nav class="nav" aria-label="ניווט ראשי">
+      <a class="nl" href="#services">שירותים</a>
+      <a class="nl" href="#how">איך זה עובד</a>
+      <a class="nl" href="#faq">שאלות</a>
+      <a class="top-phone latin" data-phone href="#quote">05X-XXX-XXXX</a>
+      <a class="btn btn-go btn-sm" href="#quote">הצעת מחיר</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <div class="beat" aria-label="המילים קשות, הדרך פשוטה, הכל אפשרי"><span>המילים קשות</span><span>הדרך פשוטה</span><span>הכל אפשרי</span></div>
+      <h1>שילוח בינלאומי בלי לפענח את המילים</h1>
+      <p class="sub">יבוא, יצוא ושילוח לאירופה ולארה"ב. כל מונח מקבל הסבר בעברית פשוטה, וכל שלב במסמכים, במכס ובהובלה מטופל על ידינו.</p>
+      <div class="cta-row">
+        <a class="btn btn-go" href="#quote">קבלו הצעת מחיר</a>
+        <a class="btn btn-line" data-wa="שלום CargoTech, אני רוצה לבדוק שילוח." href="https://wa.me/" target="_blank" rel="noopener">דברו איתנו בוואטסאפ</a>
+      </div>
+      <p class="reassure">בלי התחייבות. הצעה ברורה לפני שמתחילים.</p>
+    </div>
+
+    <div class="qcard" id="quote">
+      <h2>ספרו לנו מה שולחים</h2>
+      <p class="hint">ארבע שורות, פחות מדקה. את השאר נשלים יחד.</p>
+      <form class="qform" id="qform">
+        <div class="field">
+          <label for="f-service">מה אתם צריכים?</label>
+          <select id="f-service">
+            <option value="">בחרו שירות</option>
+            <option>יבוא</option>
+            <option>יצוא</option>
+            <option>שילוח אווירי או ימי</option>
+            <option>קורייר</option>
+            <option>מזון לארה"ב (FDA)</option>
+            <option>עמילות מכס</option>
+            <option>עדיין לא יודע</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-route">מאיפה לאן?</label>
+          <input id="f-route" type="text" placeholder="לדוגמה: מילאנו לתל אביב">
+        </div>
+        <div class="field">
+          <label for="f-cargo">מה המטען, וכמה?</label>
+          <input id="f-cargo" type="text" placeholder="לדוגמה: 12 קרטונים, כ-150 ק&quot;ג">
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label for="f-name">שם</label>
+            <input id="f-name" type="text" autocomplete="name" placeholder="השם שלכם">
+          </div>
+          <div class="field">
+            <label for="f-phone">טלפון</label>
+            <input id="f-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="05X-XXX-XXXX">
+          </div>
+        </div>
+        <a class="btn btn-go" id="send-wa" href="https://wa.me/" target="_blank" rel="noopener">שלחו לנו בוואטסאפ</a>
+        <p class="qnote">הפרטים נפתחים כהודעה מוכנה בוואטסאפ. לוחצים שלח, ואנחנו חוזרים אליכם.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<div class="carriers">
+  <div class="wrap">
+    <span class="lead">עובדים מול חברות הקורייר</span>
+    <span class="names latin"><span>DHL</span><span>FedEx</span><span>UPS</span><span>Aramex</span></span>
+    <span class="lead">ומשווים ביניהן כדי למצוא את המחיר והמהירות שמתאימים לכם</span>
+  </div>
+</div>
+
+<section class="sec" id="words">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>כולם עושים יבוא. לא כולם מסבירים אותו.</h2>
+      <p>התחום מלא במילים מפחידות. מאחורי כל אחת מהן עומד רעיון פשוט, והנה שש מהן בעברית רגילה.</p>
+    </div>
+    <div class="dict">
+      <article class="term">
+        <div class="w">עמילות מכס</div>
+        <p>מי שמדבר עם המכס במקומכם: מסמכים, סיווג המוצר ותשלומים. אתם לא צריכים לדעת את הנהלים.</p>
+        <button class="ask" data-service="עמילות מכס" type="button">צריך את זה? נבדוק</button>
+      </article>
+      <article class="term">
+        <div class="w latin">FCL / LCL</div>
+        <p>FCL היא מכולה שלמה רק לכם. LCL היא מכולה משותפת, ואתם משלמים על המקום שתפסתם.</p>
+        <button class="ask" data-service="שילוח אווירי או ימי" type="button">מה מתאים לי?</button>
+      </article>
+      <article class="term">
+        <div class="w latin">Prior Notice</div>
+        <p>הודעה מוקדמת לרשות המזון האמריקאית (FDA) על מזון שמגיע לארה"ב. בלעדיה המשלוח עלול להיעצר בגבול.</p>
+        <button class="ask" data-service="מזון לארה&quot;ב (FDA)" type="button">שולחים מזון? נטפל</button>
+      </article>
+      <article class="term">
+        <div class="w latin">Incoterms</div>
+        <p>כלל קצר שקובע מי משלם על מה ועד איפה: הובלה, ביטוח ומכס. כדאי לסגור אותו לפני שמזמינים.</p>
+        <button class="ask" data-service="עדיין לא יודע" type="button">נעזור לסגור</button>
+      </article>
+      <article class="term">
+        <div class="w latin">HS Code</div>
+        <p>מספר שמגדיר מה המוצר שלכם בעיני המכס. ממנו נגזרים המכס והמסים שתשלמו.</p>
+        <button class="ask" data-service="יבוא" type="button">נמצא את הקוד</button>
+      </article>
+      <article class="term">
+        <div class="w">משקל נפחי</div>
+        <p>בשילוח אווירי מחייבים לפי הגדול מבין המשקל האמיתי לנפח. קרטון גדול וקל עולה כמו כבד.</p>
+        <button class="ask" data-service="שילוח אווירי או ימי" type="button">נחשב לכם</button>
+      </article>
+    </div>
+    <div class="dict-after">
+      <p>לא בטוחים איזה מהמונחים נוגע אליכם? ספרו מה אתם שולחים ונגדיר הכל יחד.</p>
+      <a class="btn btn-go" href="#quote">קבלו הצעת מחיר</a>
+    </div>
+  </div>
+</section>
+
+<section class="sec services" id="services">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>כל מה שהמטען שלכם צריך, במקום אחד</h2>
+      <p>בוחרים שירות, מקבלים הצעה. כל כרטיס מוביל ישר לטופס, עם השירות כבר מסומן.</p>
+    </div>
+    <div class="svc-grid">
+      <article class="svc">
+        <h3>יבוא</h3>
+        <p>מהזמנה אצל הספק ועד הדלת שלכם: הובלה, מכס, מסמכים ותיאום מול הצוות בארץ המוצא.</p>
+        <button class="go" data-service="יבוא" type="button">בדקו מחיר ליבוא</button>
+      </article>
+      <article class="svc">
+        <h3>יצוא</h3>
+        <p>שולחים סחורה ללקוחות בחו"ל עם התיעוד הנכון ועם מי שמקבל אותה בצד השני.</p>
+        <button class="go" data-service="יצוא" type="button">בדקו מחיר ליצוא</button>
+      </article>
+      <article class="svc">
+        <h3>שילוח אווירי וימי</h3>
+        <p>אוויר כשדחוף, ים כשחסכוני. נשווה ביניהם לפי המשקל, הנפח והתאריך שחשוב לכם.</p>
+        <button class="go" data-service="שילוח אווירי או ימי" type="button">בדקו מחיר לשילוח</button>
+      </article>
+      <article class="svc">
+        <h3>קורייר</h3>
+        <p>חבילות ומסמכים במהירות. עובדים מול כל חברות הקורייר, ולכן בוחרים לפי מחיר וזמן.</p>
+        <button class="go" data-service="קורייר" type="button">בדקו מחיר לקורייר</button>
+      </article>
+      <article class="svc">
+        <span class="tag latin">FDA</span>
+        <h3>מזון לארה"ב</h3>
+        <p>אישורי FDA והודעה מוקדמת, כדי שהמזון יגיע ליעד ולא ייתקע בגבול.</p>
+        <button class="go" data-service="מזון לארה&quot;ב (FDA)" type="button">בדקו מה נדרש למזון</button>
+      </article>
+      <article class="svc">
+        <h3>עמילות מכס</h3>
+        <p>שחרור מהמכס, סיווג וחישוב מסים. מי שמטפל בזה כל יום עושה את זה בלי הפתעות.</p>
+        <button class="go" data-service="עמילות מכס" type="button">בדקו מחיר לעמילות</button>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="how">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>ארבעה שלבים. את השלישי עושים אנחנו.</h2>
+      <p>התהליך קבוע, וככה תמיד יודעים איפה עומדים.</p>
+    </div>
+    <ol class="steps">
+      <li><h3>מספרים מה ולאן</h3><p>מה המטען, מאיפה הוא יוצא ולאן הוא צריך להגיע. בלי מונחים, בשפה שלכם.</p></li>
+      <li><h3>מקבלים הצעה ברורה</h3><p>מה כלול, כמה זה עולה ובכמה זמן. אפשר להשוות ולשאול.</p></li>
+      <li><h3>אנחנו מטפלים בהכל</h3><p>מסמכים, מכס, אישורים והובלה, עם הצוותים הנכונים בכל מדינה.</p></li>
+      <li><h3>המטען מגיע</h3><p>מעדכנים אתכם לאורך הדרך, ומוסרים ליעד.</p></li>
+    </ol>
+    <div style="margin-top:36px"><a class="btn btn-go" href="#quote">התחילו משלב 1</a></div>
+  </div>
+</section>
+
+<section class="sec dest" id="dest">
+  <div class="wrap">
+    <div>
+      <h2>אירופה וארה"ב, עם צוות בכל מדינה</h2>
+      <p>המטען לא נשאר לבד בצד השני. בכל מדינה יש מי שמקבל אותו, מטפל במכס המקומי ומוסר אותו ליעד.</p>
+      <ul>
+        <li>יבוא ויצוא בין ישראל לכל אירופה</li>
+        <li>שילוח לארה"ב ומארה"ב</li>
+        <li>אישורי FDA ו-Prior Notice למזון</li>
+      </ul>
+      <a class="btn btn-go" href="#quote">בדקו את המסלול שלכם</a>
+    </div>
+    <svg class="routemap" viewBox="0 0 440 320" role="img" aria-label="מפה סכמטית של מסלולי שילוח מישראל לאירופה ולארה&quot;ב">
+      <path id="r-eu" class="path" d="M350 210 C 320 120, 240 80, 160 84"/>
+      <path id="r-us" class="path" d="M350 210 C 280 300, 140 290, 62 190"/>
+      <circle class="node-ring" cx="350" cy="210" r="15"/><circle class="node" cx="350" cy="210" r="7"/>
+      <text class="lbl" x="350" y="248" text-anchor="middle">ישראל</text>
+      <circle class="node-ring" cx="160" cy="84" r="15"/><circle class="node" cx="160" cy="84" r="7"/>
+      <text class="lbl" x="160" y="58" text-anchor="middle">אירופה</text>
+      <circle class="node-ring" cx="62" cy="190" r="15"/><circle class="node" cx="62" cy="190" r="7"/>
+      <text class="lbl" x="62" y="228" text-anchor="middle">ארה"ב</text>
+      <rect class="pkg" id="pkg1" x="-6" y="-6" width="12" height="12" rx="2"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#r-eu"/></animateMotion></rect>
+      <rect class="pkg" id="pkg2" x="-6" y="-6" width="12" height="12" rx="2"><animateMotion dur="7s" repeatCount="indefinite"><mpath href="#r-us"/></animateMotion></rect>
+    </svg>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="fda">
+      <span class="badge">FDA · PN</span>
+      <div>
+        <h3>שולחים מזון לארה"ב?</h3>
+        <p>מזון שנכנס לארה"ב כפוף לדרישות ה-FDA, כולל הודעה מוקדמת לפני ההגעה. אנחנו מטפלים באישורים ובהגשות, ואתם מתרכזים בעסק.</p>
+      </div>
+      <button class="btn btn-go" data-service="מזון לארה&quot;ב (FDA)" type="button">בדקו מה נדרש למזון שלכם</button>
+    </div>
+  </div>
+</section>
+
+<section class="sec services" id="faq" style="border-bottom:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>שאלות שכולם שואלים ולא תמיד מעזים</h2>
+      <p>אין שאלה טיפשית בשילוח. יש מערכת שלמה שנבנתה מבלי להסביר.</p>
+    </div>
+    <div class="faq">
+      <details open>
+        <summary>אני לא מבין במכס. זה בסדר?</summary>
+        <div class="ans">כן. מספרים לנו מה אתם שולחים, אנחנו מסבירים בעברית פשוטה מה נדרש, ומטפלים בשאר.</div>
+      </details>
+      <details>
+        <summary>כמה זה עולה?</summary>
+        <div class="ans">זה תלוי במשקל, בנפח, במסלול ובסוג השירות. אחרי שמספרים לנו את הפרטים מקבלים הצעה ברורה, לפני שמתחילים.</div>
+      </details>
+      <details>
+        <summary>מה קורה אם יש עיכוב בדרך?</summary>
+        <div class="ans">מטפלים בזה מול הגורמים הרלוונטיים ומעדכנים אתכם בכל שלב, כדי שלא תצטרכו לרדוף אחרי מידע.</div>
+      </details>
+      <details>
+        <summary>אפשר לשלוח מזון לארה"ב?</summary>
+        <div class="ans">כן, בכפוף לדרישות ה-FDA. אנחנו מטפלים באישורים ובהודעה המוקדמת שנדרשת לפני שהמשלוח מגיע.</div>
+      </details>
+      <details>
+        <summary>עם איזו חברת שילוח אתם עובדים?</summary>
+        <div class="ans">עם כל חברות הקורייר. זה מאפשר להשוות ולבחור לפי מה שחשוב לכם: מחיר, מהירות או שילוב ביניהם.</div>
+      </details>
+    </div>
+    <div class="faq-cta">
+      <p>יש שאלה שלא מופיעה כאן?</p>
+      <a class="btn btn-go" data-wa="שלום CargoTech, יש לי שאלה על שילוח." href="https://wa.me/" target="_blank" rel="noopener">שאלו אותנו בוואטסאפ</a>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <div class="beat" style="margin:0"><span>המילים קשות</span><span>הדרך פשוטה</span><span>הכל אפשרי</span></div>
+    <h2>יש לכם מטען? מתחילים בשיחה.</h2>
+    <p>ספרו לנו מה אתם רוצה להעביר, ואנחנו נחזור עם הצעה ועם הסבר על כל מה שצריך לדעת.</p>
+    <div class="cta-row">
+      <a class="btn btn-go" href="#quote">קבלו הצעת מחיר</a>
+      <a class="btn btn-line" data-wa="שלום CargoTech, אני רוצה לבדוק שילוח." href="https://wa.me/" target="_blank" rel="noopener">וואטסאפ</a>
+    </div>
+    <div class="contact-lines">
+      <div><span>טלפון</span><b class="latin" data-phone>05X-XXX-XXXX</b></div>
+      <div><span>אימייל</span><b class="latin" data-email>office@your-domain.co.il</b></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>CargoTech · יבוא, יצוא ושילוח בינלאומי</span>
+    <span>אירופה · ארה"ב · אישורי FDA למזון · עמילות מכס</span>
+  </div>
+</footer>
+
+<div class="bar">
+  <a class="btn btn-go" href="#quote">הצעת מחיר</a>
+  <a class="btn btn-line" data-wa="שלום CargoTech, אני רוצה לבדוק שילוח." href="https://wa.me/" target="_blank" rel="noopener">וואטסאפ</a>
+</div>
+
+</div>
+
+<script>
+/* Fill these in before going live. Leave whatsapp empty to open a blank WhatsApp chooser. */
+var CONFIG = {
+  whatsapp: "",               /* international format, digits only, e.g. 972501234567 */
+  phoneDisplay: "05X-XXX-XXXX",
+  email: "office@your-domain.co.il"
+};
+
+(function () {
+  var base = CONFIG.whatsapp ? "https://wa.me/" + CONFIG.whatsapp : "https://wa.me/";
+  function wa(text) { return base + "?text=" + encodeURIComponent(text); }
+
+  document.querySelectorAll("[data-phone]").forEach(function (el) { el.textContent = CONFIG.phoneDisplay; });
+  document.querySelectorAll("[data-email]").forEach(function (el) { el.textContent = CONFIG.email; });
+  document.querySelectorAll("[data-wa]").forEach(function (el) { el.href = wa(el.getAttribute("data-wa")); });
+
+  var f = {
+    service: document.getElementById("f-service"),
+    route: document.getElementById("f-route"),
+    cargo: document.getElementById("f-cargo"),
+    name: document.getElementById("f-name"),
+    phone: document.getElementById("f-phone")
+  };
+  var send = document.getElementById("send-wa");
+  function compose() {
+    var lines = ["שלום CargoTech, אני רוצה הצעת מחיר."];
+    if (f.service.value) lines.push("שירות: " + f.service.value);
+    if (f.route.value.trim()) lines.push("מסלול: " + f.route.value.trim());
+    if (f.cargo.value.trim()) lines.push("מטען: " + f.cargo.value.trim());
+    if (f.name.value.trim()) lines.push("שם: " + f.name.value.trim());
+    if (f.phone.value.trim()) lines.push("טלפון: " + f.phone.value.trim());
+    send.href = wa(lines.join("\n"));
+  }
+  Object.keys(f).forEach(function (k) { f[k].addEventListener("input", compose); f[k].addEventListener("change", compose); });
+  document.getElementById("qform").addEventListener("submit", function (e) { e.preventDefault(); });
+  compose();
+
+  document.querySelectorAll("[data-service]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      f.service.value = btn.getAttribute("data-service");
+      compose();
+      document.getElementById("quote").scrollIntoView({ block: "center" });
+      setTimeout(function () { f.route.focus({ preventScroll: true }); }, 350);
+    });
+  });
+
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    document.querySelectorAll(".routemap .pkg").forEach(function (p) { p.parentNode.removeChild(p); });
+  }
+})();
+</script>

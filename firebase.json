@@ -1,0 +1,61 @@
+{
+  "hosting": {
+    "site": "cargotech-site",
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "admin.html",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "headers": [
+      {
+        "source": "**/*.html",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=300"
+          }
+        ]
+      }
+    ],
+    "rewrites": [
+      {
+        "source": "/api/govdata",
+        "function": {
+          "functionId": "govdata",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/api/lead",
+        "function": {
+          "functionId": "lead",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/api/v1/**",
+        "function": {
+          "functionId": "api",
+          "region": "europe-west1"
+        }
+      }
+    ]
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "*.log"
+      ]
+    }
+  ],
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  }
+}

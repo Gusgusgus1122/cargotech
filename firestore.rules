@@ -1,0 +1,11 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Everything is closed to browsers on purpose.
+    // All reading and writing (leads, orders, users, staff, price codes) goes through the Cloud Functions
+    // "lead" and "api", which check who is calling and use the Admin SDK.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

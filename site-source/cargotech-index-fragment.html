@@ -1,0 +1,1227 @@
+<title>CargoTech</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Secular+One&family=Heebo:wght@500;800;900&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout concept: dark ink hero band with a light quote card pinned beside the headline (RTL, text on the right).
+   Every section ends in one orange action. Orange is used only for actions, so it always means "press here". */
+:root {
+  --bg: #F2F5F8;
+  --surface: #FFFFFF;
+  --fg: #0B1F33;
+  --muted: #51647A;
+  --line: #D5DEE7;
+  --ink: #0B1F33;
+  --ink-2: #13304D;
+  --on-ink: #EAF1F7;
+  --on-ink-muted: #A9BCCF;
+  --accent: #FF6B2C;
+  --accent-hover: #FF8248;
+  --on-accent: #0B1F33;
+  --sea: #1B6A8A;
+  --sea-soft: #DCEBF2;
+  --ok: #1F8A5B;
+  --font-display: "Secular One", "Assistant", "Arial Hebrew", Arial, sans-serif;
+  --font-body: "Assistant", "Arial Hebrew", Arial, sans-serif;
+  --font-code: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #08141F; --surface: #0F2133; --fg: #E6EEF5; --muted: #9FB3C8; --line: #1E3A54;
+    --ink: #050E16; --ink-2: #0C2034; --sea: #63B6D6; --sea-soft: #10303F; --ok: #4CC18A;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #08141F; --surface: #0F2133; --fg: #E6EEF5; --muted: #9FB3C8; --line: #1E3A54;
+  --ink: #050E16; --ink-2: #0C2034; --sea: #63B6D6; --sea-soft: #10303F; --ok: #4CC18A;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 17px; line-height: 1.6; direction: rtl; text-align: right; }
+.skip { position: absolute; inset-inline-start: 16px; top: -80px; z-index: 50; background: var(--accent); color: var(--on-accent); padding: 12px 18px; border-radius: 8px; font-weight: 800; text-decoration: none; }
+.skip:focus { top: 12px; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.2; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.wrap { width: min(1120px, 100%); margin-inline: auto; padding-inline: 16px; }
+.latin { font-family: var(--font-code); direction: ltr; unicode-bidi: isolate; letter-spacing: 0.02em; }
+
+/* Buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 12px 26px; border-radius: 10px; border: 2px solid transparent; font: 800 1.05rem/1.2 var(--font-body); cursor: pointer; text-decoration: none; transition: transform .15s, background .15s; }
+.btn-go { background: var(--accent); color: var(--on-accent); }
+.btn-go:hover { background: var(--accent-hover); transform: translateY(-2px); }
+.btn-line { background: transparent; color: var(--on-ink); border-color: rgba(234, 241, 247, .45); }
+.btn-line:hover { border-color: var(--on-ink); }
+.btn-line-dark { background: transparent; color: var(--fg); border-color: var(--line); }
+.btn-line-dark:hover { border-color: var(--sea); }
+.btn-sm { min-height: 44px; padding: 8px 18px; font-size: .95rem; }
+
+/* Header */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--ink); color: var(--on-ink); border-bottom: 1px solid var(--ink-2); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--font-display); font-size: 1.5rem; letter-spacing: .01em; }
+.brand svg { width: 34px; height: 34px; flex: none; }
+.nav { display: flex; align-items: center; gap: 26px; }
+.nav a.nl { text-decoration: none; font-weight: 600; color: var(--on-ink-muted); }
+.nav a.nl:hover { color: var(--on-ink); }
+.top-phone { font-weight: 700; color: var(--on-ink); text-decoration: none; }
+
+/* Hero */
+.hero { background:
+    repeating-linear-gradient(90deg, transparent 0 79px, rgba(169, 188, 207, .07) 79px 80px),
+    repeating-linear-gradient(0deg, transparent 0 79px, rgba(169, 188, 207, .07) 79px 80px),
+    var(--ink);
+  color: var(--on-ink); padding-block: 56px 64px; }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 48px; align-items: start; }
+.beat { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-bottom: 22px; font-weight: 800; color: var(--accent); font-size: 1rem; letter-spacing: .02em; }
+.beat span + span::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--on-ink-muted); margin-inline-end: 18px; vertical-align: middle; }
+.hero h1 { font-size: clamp(2.2rem, 5.4vw, 3.7rem); }
+.hero .sub { margin-top: 20px; font-size: 1.2rem; color: var(--on-ink-muted); max-width: 34em; }
+.hero .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+.hero .reassure { margin-top: 18px; font-size: .95rem; color: var(--on-ink-muted); }
+
+/* Quote card */
+.qcard { background: var(--surface); color: var(--fg); border-radius: 14px; padding: 26px; border: 1px solid var(--line); box-shadow: 0 18px 40px rgba(0, 0, 0, .28); }
+.qcard h2 { font-size: 1.5rem; }
+.qcard .hint { color: var(--muted); font-size: .95rem; margin-top: 4px; }
+.qform { display: grid; gap: 14px; margin-top: 18px; }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field label { font-weight: 700; font-size: .92rem; }
+.field input, .field select { width: 100%; min-height: 48px; padding: 10px 12px; border: 1.5px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--fg); font: 600 1rem var(--font-body); }
+.field input:focus, .field select:focus { border-color: var(--sea); outline: none; box-shadow: 0 0 0 3px var(--sea-soft); }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.qform .btn { width: 100%; }
+.qnote { font-size: .88rem; color: var(--muted); }
+
+/* Carriers */
+.carriers { background: var(--surface); border-bottom: 1px solid var(--line); }
+.carriers .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 34px; padding-block: 20px; }
+.carriers .lead { font-weight: 700; color: var(--muted); }
+.carriers .names { display: flex; flex-wrap: wrap; gap: 8px 28px; font-weight: 800; font-size: 1.15rem; letter-spacing: .03em; }
+
+/* Section rhythm */
+.sec { padding-block: 72px; }
+.sec-head { display: grid; gap: 12px; max-width: 40em; margin-bottom: 36px; }
+.sec-head h2 { font-size: clamp(1.7rem, 3.6vw, 2.5rem); }
+.sec-head p { color: var(--muted); font-size: 1.1rem; }
+
+/* Dictionary */
+.dict { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.term { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 22px; display: grid; gap: 10px; align-content: start; }
+.term .w { font-family: var(--font-display); font-size: 1.4rem; color: var(--sea); }
+.term .w.latin { font-family: var(--font-code); font-size: 1.15rem; font-weight: 500; }
+.term p { color: var(--fg); }
+.ask { justify-self: start; display: inline-flex; align-items: center; min-height: 44px; background: none; border: 0; padding: 0; font: 700 .95rem var(--font-body); color: var(--sea); cursor: pointer; text-decoration: underline; text-underline-offset: 4px; }
+.ask:hover { color: var(--fg); }
+.dict-after { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; margin-top: 30px; padding: 22px 24px; background: var(--sea-soft); border-radius: 12px; }
+.dict-after p { flex: 1 1 300px; font-weight: 700; font-size: 1.1rem; }
+
+/* Services */
+.services { background: var(--surface); border-block: 1px solid var(--line); }
+.svc-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.svc { padding: 28px 26px; display: grid; gap: 10px; align-content: start; background: var(--surface); border-inline-start: 1px solid var(--line); border-block-end: 1px solid var(--line); }
+.svc h3 { font-size: 1.35rem; }
+.svc p { color: var(--muted); }
+.svc .go { justify-self: start; margin-top: 6px; background: none; border: 0; padding: 0; font: 800 1rem var(--font-body); color: var(--fg); cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+.svc .go::after { content: "←"; color: var(--accent); font-size: 1.2rem; transition: transform .15s; }
+.svc .go:hover::after { transform: translateX(-4px); }
+.svc .tag { font-size: .8rem; font-weight: 800; letter-spacing: .06em; color: var(--ok); }
+
+/* Steps */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; counter-reset: s; }
+.steps li { counter-increment: s; padding: 0 22px 0 0; border-inline-start: 2px solid var(--line); margin-inline-end: 22px; display: grid; gap: 8px; align-content: start; }
+.steps li::before { content: counter(s); font-family: var(--font-display); font-size: 2.6rem; line-height: 1; color: var(--accent); }
+.steps h3 { font-size: 1.25rem; }
+.steps p { color: var(--muted); }
+.steps li:last-child { border-inline-start-color: var(--accent); }
+
+/* Destinations */
+.dest { background: var(--ink); color: var(--on-ink); }
+.dest .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+.dest h2 { font-size: clamp(1.7rem, 3.6vw, 2.5rem); }
+.dest p { color: var(--on-ink-muted); margin-top: 14px; font-size: 1.1rem; }
+.dest ul { margin: 22px 0 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+.dest li { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: baseline; }
+.dest li::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); transform: translateY(1px); }
+.dest .btn { margin-top: 28px; }
+.routemap { width: 100%; height: auto; max-width: 100%; }
+.routemap .lbl { fill: var(--on-ink); font: 700 15px var(--font-body); }
+.routemap .sub { fill: var(--on-ink-muted); font: 500 12px var(--font-body); }
+.routemap .node { fill: var(--accent); }
+.routemap .node-ring { fill: none; stroke: var(--accent); stroke-width: 1.5; opacity: .5; }
+.routemap .path { fill: none; stroke: var(--on-ink-muted); stroke-width: 1.6; stroke-dasharray: 3 7; stroke-linecap: round; }
+.routemap .pkg { fill: var(--on-ink); }
+
+/* FDA block */
+.fda { display: grid; grid-template-columns: auto 1fr auto; gap: 24px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 26px 28px; border-inline-start: 6px solid var(--ok); }
+.fda .badge { font-family: var(--font-code); font-weight: 500; font-size: 1.05rem; color: var(--ok); border: 1.5px solid var(--ok); border-radius: 8px; padding: 6px 12px; direction: ltr; }
+.fda h3 { font-size: 1.4rem; }
+.fda p { color: var(--muted); margin-top: 4px; }
+
+/* FAQ */
+.faq { display: grid; gap: 10px; max-width: 52em; }
+.faq details { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+.faq summary { cursor: pointer; padding: 18px 20px; font-weight: 800; font-size: 1.08rem; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-size: 1.6rem; line-height: 1; color: var(--accent); font-weight: 400; flex: none; }
+.faq details[open] summary::after { content: "−"; }
+.faq .ans { padding: 0 20px 20px; color: var(--muted); font-size: 1.05rem; }
+.faq-cta { margin-top: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px; }
+.faq-cta p { font-weight: 700; }
+
+/* Final CTA */
+.final { background: var(--ink); color: var(--on-ink); padding-block: 72px; }
+.final .wrap { display: grid; gap: 22px; justify-items: start; }
+.final h2 { font-size: clamp(1.9rem, 4.4vw, 3rem); max-width: 18em; }
+.final p { color: var(--on-ink-muted); font-size: 1.15rem; max-width: 34em; }
+.final .cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.contact-lines { display: flex; flex-wrap: wrap; gap: 8px 32px; margin-top: 10px; font-weight: 700; }
+.contact-lines span { color: var(--on-ink-muted); font-weight: 600; margin-inline-end: 8px; }
+
+footer { background: var(--ink); color: var(--on-ink-muted); border-top: 1px solid var(--ink-2); padding-block: 22px; font-size: .92rem; }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
+
+/* Mobile action bar */
+.bar { display: none; position: fixed; inset-inline: 0; bottom: 0; z-index: 30; background: var(--ink); border-top: 1px solid var(--ink-2); padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px)); gap: 10px; }
+.bar .btn { flex: 1; min-height: 48px; padding: 8px 12px; }
+
+@media (max-width: 900px) {
+  .hero .wrap, .dest .wrap { grid-template-columns: minmax(0, 1fr); gap: 36px; }
+  .dict { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .svc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 32px; }
+  .fda { grid-template-columns: minmax(0, 1fr); }
+  .fda .badge { justify-self: start; }
+  .nav a.nl { display: none; }
+}
+@media (max-width: 600px) {
+  body { font-size: 16px; padding-bottom: 76px; }
+  .sec { padding-block: 52px; }
+  .hero { padding-block: 36px 44px; }
+  .dict, .svc-grid, .steps { grid-template-columns: minmax(0, 1fr); }
+  .row2 { grid-template-columns: minmax(0, 1fr); }
+  .top-phone { display: none; }
+  .qcard { padding: 20px; }
+  .bar { display: flex; }
+  .hero .cta-row .btn { flex: 1 1 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .btn, .svc .go::after { transition: none; }
+}
+
+/* ---- Site-wide additions ---- */
+.nav { gap: 22px; }
+.nav a.nl[aria-current="page"] { color: var(--on-ink); box-shadow: inset 0 -3px 0 var(--accent); padding-block: 6px; }
+.mnav { display: none; position: relative; }
+.mnav summary { list-style: none; cursor: pointer; min-height: 44px; display: inline-flex; align-items: center; padding: 0 16px; border: 1.5px solid rgba(234, 241, 247, .45); border-radius: 10px; font-weight: 800; color: var(--on-ink); }
+.mnav summary::-webkit-details-marker { display: none; }
+.mnav .panel { position: absolute; inset-inline-end: 0; top: calc(100% + 8px); min-width: 230px; background: var(--ink-2); border: 1px solid rgba(234, 241, 247, .2); border-radius: 12px; padding: 8px; display: grid; }
+.mnav .panel a { display: flex; align-items: center; min-height: 46px; padding: 0 14px; text-decoration: none; color: var(--on-ink); font-weight: 700; border-radius: 8px; }
+.mnav .panel a:hover, .mnav .panel a[aria-current="page"] { background: rgba(234, 241, 247, .1); }
+@media (max-width: 900px) { .mnav { display: block; } }
+
+.phero { background: repeating-linear-gradient(90deg, transparent 0 79px, rgba(169, 188, 207, .07) 79px 80px), repeating-linear-gradient(0deg, transparent 0 79px, rgba(169, 188, 207, .07) 79px 80px), var(--ink); color: var(--on-ink); padding-block: 44px 52px; }
+.phero .wrap { display: grid; gap: 16px; justify-items: start; }
+.phero h1 { font-size: clamp(2rem, 4.8vw, 3.3rem); max-width: 20em; }
+.phero .lead { color: var(--on-ink-muted); font-size: 1.2rem; max-width: 38em; }
+.phero .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+.crumbs { font-size: .92rem; color: var(--on-ink-muted); }
+.crumbs a { color: var(--on-ink); text-underline-offset: 3px; }
+
+.checks { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 32px; }
+.checks li { position: relative; padding-inline-start: 36px; font-size: 1.08rem; }
+.checks li::before { content: ""; position: absolute; inset-inline-start: 0; top: .28em; width: 22px; height: 22px; border-radius: 50%; background: var(--ok); }
+.checks li::after { content: ""; position: absolute; inset-inline-start: 8px; top: .48em; width: 6px; height: 10px; border: solid var(--surface); border-width: 0 2.5px 2.5px 0; transform: rotate(45deg); }
+
+.more { font-weight: 800; color: var(--sea); text-underline-offset: 4px; }
+.more:hover { color: var(--fg); }
+
+.tscroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
+table.cmp { border-collapse: collapse; width: 100%; min-width: 560px; background: var(--surface); }
+.cmp th, .cmp td { padding: 14px 16px; text-align: right; border-bottom: 1px solid var(--line); vertical-align: top; }
+.cmp tr:last-child td, .cmp tr:last-child th { border-bottom: 0; }
+.cmp thead th { font-family: var(--font-display); font-weight: 400; font-size: 1.1rem; color: var(--sea); background: var(--bg); }
+.cmp tbody th { font-weight: 800; }
+
+.rel { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.rel a { display: grid; gap: 6px; align-content: start; padding: 20px 22px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; text-decoration: none; color: var(--fg); transition: border-color .15s; }
+.rel a:hover { border-color: var(--sea); }
+.rel b { font-family: var(--font-display); font-weight: 400; font-size: 1.2rem; color: var(--sea); }
+.rel span { color: var(--muted); font-size: .98rem; }
+
+.prose { max-width: 42em; }
+.prose h2 { font-size: 1.7rem; margin: 44px 0 12px; }
+.prose p { margin: 0 0 16px; font-size: 1.08rem; }
+.prose ul, .prose ol { padding-inline-start: 24px; margin: 0 0 18px; display: grid; gap: 8px; font-size: 1.08rem; }
+.prose a { color: var(--sea); text-underline-offset: 3px; font-weight: 700; }
+.tldr { background: var(--sea-soft); border-radius: 12px; padding: 20px 22px; margin: 0 0 12px; max-width: 42em; }
+.tldr b { display: block; margin-bottom: 6px; color: var(--sea); font-family: var(--font-display); font-weight: 400; font-size: 1.15rem; }
+.callout { background: var(--surface); border: 1px solid var(--line); border-inline-start: 5px solid var(--accent); padding: 20px 22px; border-radius: 10px; margin-block: 30px; display: grid; gap: 14px; justify-items: start; }
+.callout p { margin: 0; font-weight: 700; font-size: 1.1rem; }
+.meta { color: var(--muted); font-size: .95rem; }
+
+.calc { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: start; }
+.calc .inputs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px; }
+.calc .inputs .full { grid-column: 1 / -1; }
+.calc .ex { grid-column: 1 / -1; font-size: .9rem; color: var(--muted); }
+.result { background: var(--ink); color: var(--on-ink); border-radius: 14px; padding: 26px; display: grid; gap: 14px; }
+.result .big { font-family: var(--font-display); font-size: clamp(2.2rem, 6vw, 3rem); line-height: 1.1; color: var(--accent); }
+.result .big small { font-family: var(--font-body); font-size: 1rem; color: var(--on-ink-muted); margin-inline-start: 6px; }
+.result dl { margin: 0; display: grid; gap: 8px; }
+.result dl div { display: flex; justify-content: space-between; gap: 16px; border-bottom: 1px solid var(--ink-2); padding-bottom: 8px; }
+.result dt { color: var(--on-ink-muted); }
+.result dd { margin: 0; font-weight: 800; font-variant-numeric: tabular-nums; }
+.result .why { color: var(--on-ink-muted); font-size: .98rem; }
+
+.quote-sec { background: var(--ink); color: var(--on-ink); padding-block: 64px; }
+.quote-sec .wrap { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 44px; align-items: start; }
+.quote-sec h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); }
+.quote-sec .side { display: grid; gap: 16px; }
+.quote-sec .side p { color: var(--on-ink-muted); font-size: 1.12rem; }
+.quote-sec .contact-lines { margin-top: 6px; }
+
+.foot { background: var(--ink); color: var(--on-ink-muted); border-top: 1px solid var(--ink-2); padding-block: 44px 24px; font-size: .95rem; }
+.foot .cols { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: 28px; }
+.foot h4 { margin: 0 0 8px; color: var(--on-ink); font-size: 1.02rem; font-weight: 800; }
+.foot a { display: block; padding: 9px 0; color: var(--on-ink-muted); text-decoration: none; }
+.foot a:hover { color: var(--on-ink); }
+.foot .brandline { font-family: var(--font-display); font-size: 1.4rem; color: var(--on-ink); margin-bottom: 8px; }
+.foot .legal { margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--ink-2); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
+
+@media (max-width: 900px) {
+  .checks { grid-template-columns: minmax(0, 1fr); }
+  .rel { grid-template-columns: minmax(0, 1fr); }
+  .calc, .quote-sec .wrap { grid-template-columns: minmax(0, 1fr); }
+  .foot .cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 600px) {
+  .calc .inputs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .phero { padding-block: 32px 40px; }
+  .quote-sec { padding-block: 48px; }
+  .foot .cols { grid-template-columns: minmax(0, 1fr); }
+}
+/* ===== Negmar-inspired skin: deep navy, cyan marker line, ghost numerals, dot grids, waves, line icons ===== */
+:root {
+  --bg: #F3F6F9; --line: #DDE2E6; --ink: #104772; --ink-2: #185B92; --ink-deep: #0C3A5F; --on-ink-muted: #C6D0D8;
+  --accent: #4FC3EC; --accent-hover: #7AD3F1; --on-accent: #0C3A5F; --muted: #5A6F7E; --sea: #104772; --sea-soft: #DCE9F4; --cyan: #4FC3EC;
+  --font-display: "Heebo", "Assistant", "Arial Hebrew", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --ink: #071A2C; --ink-2: #0E2B47; --sea: #63B6E6; --sea-soft: #0F2E45; } }
+:root[data-theme="dark"] { --ink: #071A2C; --ink-2: #0E2B47; --sea: #63B6E6; --sea-soft: #0F2E45; }
+h1, h2, h3 { font-weight: 900; letter-spacing: -.01em; }
+.rel b, .term .w, .steps li::before { font-weight: 900; }
+.btn { border-radius: 6px; }
+
+/* Header */
+.top { border-bottom: 1px solid rgba(79, 195, 236, .28); }
+.nav a.nl[aria-current="page"] { box-shadow: inset 0 -3px 0 var(--cyan); }
+
+/* Hero + page hero: navy photo-less band, concentric rings, dot patch, wave into the page */
+.hero, .phero {
+  position: relative; overflow: hidden; padding-bottom: 104px;
+  background:
+    repeating-radial-gradient(circle at 18% 46%, rgba(79, 195, 236, .17) 0 1px, transparent 1px 74px),
+    radial-gradient(ellipse at 88% 10%, rgba(79, 195, 236, .10), transparent 55%),
+    linear-gradient(160deg, var(--ink-2), var(--ink) 62%);
+}
+.hero::before, .phero::before {
+  content: ""; position: absolute; inset-block-start: 26px; inset-inline-start: 28px; width: 104px; height: 78px; pointer-events: none;
+  background: radial-gradient(circle, rgba(255, 255, 255, .55) 2px, transparent 2.6px) 0 0 / 26px 26px;
+}
+.hero::after, .phero::after {
+  content: ""; position: absolute; inset-inline: 0; bottom: -1px; height: 72px; background: var(--bg); pointer-events: none;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80' preserveAspectRatio='none'%3E%3Cpath d='M0 80V46C220 6 470 0 720 30s560 46 720 4V80z'/%3E%3C/svg%3E") bottom / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80' preserveAspectRatio='none'%3E%3Cpath d='M0 80V46C220 6 470 0 720 30s560 46 720 4V80z'/%3E%3C/svg%3E") bottom / 100% 100% no-repeat;
+}
+.hero .wrap, .phero .wrap { position: relative; z-index: 1; }
+/* a route line: a dashed arc with a small glowing marker travelling along it, echoing the lanes (01/02/03) concept */
+.hero .wrap::before, .phero .wrap::before {
+  content: ""; position: absolute; top: 6px; left: 0; width: 100%; height: 60px; pointer-events: none; z-index: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 60' preserveAspectRatio='none'%3E%3Cpath d='M5 45 Q200 5 395 45' fill='none' stroke='%234FC3EC' stroke-width='1.5' stroke-dasharray='4 6' opacity='.35'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+}
+.hero .wrap::after, .phero .wrap::after {
+  content: ""; position: absolute; width: 8px; height: 8px; border-radius: 50%; left: 2%; top: 42px; z-index: 0;
+  background: var(--cyan); box-shadow: 0 0 10px 2px rgba(79, 195, 236, .65); pointer-events: none; opacity: 0;
+  animation: route-travel 9s ease-in-out infinite;
+}
+@keyframes route-travel { 0% { left: 2%; top: 42px; opacity: 0; } 10% { opacity: 1; } 50% { left: 50%; top: 10px; } 90% { opacity: 1; } 100% { left: 97%; top: 42px; opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .hero .wrap::after, .phero .wrap::after { animation: none; opacity: .8; left: 50%; top: 10px; } }
+.hero h1::after, .phero h1::after { content: ""; display: block; width: 52px; height: 4px; background: var(--cyan); margin-top: 22px; border-radius: 2px; }
+.beat { color: var(--cyan); }
+
+/* Route lanes inside the home hero (01 / 02 / 03) */
+.lanes { position: relative; z-index: 1; margin-top: 44px; }
+.lanes .wrap { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border-top: 1px solid rgba(255, 255, 255, .16); padding-top: 18px; }
+.lanes a { display: flex; align-items: baseline; gap: 14px; padding: 6px 4px; text-decoration: none; color: var(--on-ink); font-weight: 800; border-bottom: 2px solid transparent; width: max-content; max-width: 100%; }
+.lanes a:hover { border-bottom-color: var(--cyan); }
+.lanes i { font-style: normal; font-family: var(--font-display); font-weight: 900; font-size: 1.9rem; color: var(--cyan); line-height: 1; }
+.lanes span { font-size: 1.05rem; }
+
+/* Section heads: ghost numeral + cyan marker line */
+main { counter-reset: sec; }
+.sec-head { position: relative; counter-increment: sec; padding-inline-start: clamp(76px, 13vw, 132px); min-height: 84px; }
+.sec-head::before {
+  content: counter(sec, decimal-leading-zero); position: absolute; inset-inline-start: 0; top: -10px;
+  font-family: var(--font-display); font-weight: 900; font-size: clamp(4rem, 10vw, 7rem); line-height: .9; color: var(--fg); opacity: .07; pointer-events: none;
+}
+.sec-head h2::after { content: ""; display: block; width: 44px; height: 4px; background: var(--cyan); margin-top: 14px; border-radius: 2px; }
+
+/* Service cards: dashed-circle line icons */
+.svc::before { content: ""; width: 58px; height: 58px; border: 1.5px dashed var(--sea); border-radius: 50%; background-repeat: no-repeat; background-position: center; background-size: 30px; margin-bottom: 6px; }
+.svc:nth-child(1)::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='none' stroke='%233A8FD0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 18v8h22v-8M16 4v15M11 14l5 5 5-5'/%3E%3C/svg%3E"); }
+.svc:nth-child(2)::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='none' stroke='%233A8FD0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 18v8h22v-8M16 20V5M11 10l5-5 5 5'/%3E%3C/svg%3E"); }
+.svc:nth-child(3)::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='none' stroke='%233A8FD0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21l2 5h22l2-5zM7 21V14h18v7M11 14V9h10v5M16 9V5'/%3E%3C/svg%3E"); }
+.svc:nth-child(4)::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='none' stroke='%233A8FD0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 9l12-5 12 5v14l-12 5-12-5zM4 9l12 5 12-5M16 14v14'/%3E%3C/svg%3E"); }
+.svc:nth-child(5)::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='none' stroke='%233A8FD0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 3h14l5 5v21H7zM21 3v5h5M11 18l4 4 7-8'/%3E%3C/svg%3E"); }
+.svc:nth-child(6)::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='none' stroke='%233A8FD0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='16' cy='16' r='12'/%3E%3Cpath d='M20 12l-2 6-6 2 2-6z'/%3E%3C/svg%3E"); }
+
+/* Steps: big cyan-blue numerals on a dotted rail */
+.steps li { border-inline-start: 2px dotted var(--sea); }
+.steps li::before { color: var(--sea); font-size: 3rem; }
+.steps li:last-child { border-inline-start-color: var(--cyan); }
+
+/* Article / related cards: solid blue news cards */
+.rel a { background: linear-gradient(160deg, #1A5E96, #104772); border: 0; color: #fff; position: relative; padding: 24px 24px 54px; border-radius: 6px; }
+.rel a:hover { transform: translateY(-3px); }
+.rel a { transition: transform .15s; }
+.rel b { color: #fff; font-size: 1.25rem; }
+.rel span { color: rgba(255, 255, 255, .82); }
+.rel a::after { content: "לקריאה ←"; position: absolute; inset-inline-start: 24px; bottom: 18px; font-weight: 800; font-size: .95rem; color: #fff; border-bottom: 2px solid var(--cyan); padding-bottom: 2px; }
+
+/* Quote band: dot patch */
+.quote-sec { position: relative; overflow: hidden; background: linear-gradient(160deg, var(--ink-2), var(--ink) 65%); }
+.quote-sec::before { content: ""; position: absolute; inset-block-end: 28px; inset-inline-end: 28px; width: 104px; height: 78px; background: radial-gradient(circle, rgba(255, 255, 255, .4) 2px, transparent 2.6px) 0 0 / 26px 26px; pointer-events: none; }
+.quote-sec .wrap { position: relative; }
+.foot { background: var(--ink); }
+
+@media (max-width: 720px) {
+  .lanes .wrap { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .sec-head { padding-inline-start: 0; padding-top: 52px; min-height: 0; }
+  .sec-head::before { top: -4px; font-size: 4rem; }
+  .hero, .phero { padding-bottom: 88px; }
+}
+@media (prefers-reduced-motion: reduce) { .rel a { transition: none; } .rel a:hover { transform: none; } }
+
+/* Hero photo (Higgsfield render, navy-graded) under a palette overlay */
+.hero, .phero {
+  background:
+    repeating-radial-gradient(circle at 18% 46%, rgba(79, 195, 236, .17) 0 1px, transparent 1px 74px),
+    linear-gradient(100deg, rgba(16, 71, 114, .90) 0%, rgba(16, 71, 114, .72) 55%, rgba(24, 91, 146, .45) 100%),
+    url("https://d8j0ntlcm91z4.cloudfront.net/user_37HsBZKzp3azVbNUBQIhUBwn3eG/hf_20260930_190759_42bd3539-b232-41b8-9565-33675ecfe640.png") center / cover no-repeat,
+    var(--ink);
+}
+
+.brand svg { width: auto; height: 27px; flex: none; }
+.brand { padding-block: 6px; }
+
+/* ===== Hover menus (header) ===== */
+.nav .dd { position: relative; }
+.nav .dd-b { background: none; border: 0; font: inherit; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 2px; }
+.nav .dd-b i { width: 7px; height: 7px; border-inline-end: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg) translateY(-2px); opacity: .8; }
+.nav .dd.on > .dd-b { color: var(--on-ink); box-shadow: inset 0 -3px 0 var(--cyan); }
+.dd-p { position: absolute; inset-inline-start: -14px; top: 100%; min-width: 250px; background: var(--ink-deep); border: 1px solid rgba(79, 195, 236, .35); border-top: 3px solid var(--cyan); border-radius: 0 0 8px 8px; padding: 8px; display: none; box-shadow: 0 18px 36px rgba(0, 0, 0, .3); z-index: 30; }
+.dd:hover > .dd-p, .dd:focus-within > .dd-p { display: grid; }
+.dd-p a { display: flex; align-items: center; min-height: 44px; padding: 0 14px; border-radius: 6px; color: var(--on-ink); text-decoration: none; font-weight: 700; }
+.dd-p a:hover, .dd-p a[aria-current="page"] { background: rgba(79, 195, 236, .16); }
+@media (max-width: 900px) { .nav .dd, .nav a.nl { display: none; } }
+
+/* ===== Footer: titles only, topics open upward on hover ===== */
+.foot { background: var(--ink-deep); padding-block: 28px 18px; position: relative; }
+.foot .cols { align-items: start; }
+.foot .fbrand p { color: var(--on-ink-muted); max-width: 26em; }
+.fcol { position: relative; outline: none; }
+.fcol h4 { margin: 0; padding: 10px 0; border-bottom: 2px solid var(--cyan); display: flex; justify-content: space-between; cursor: default; }
+.fcol h4::after { content: "▴"; color: var(--cyan); font-size: .8rem; }
+.fhint { margin-top: 14px; font-size: .88rem; color: var(--on-ink-muted); }
+@media (hover: hover) and (min-width: 901px) {
+  .fl { position: absolute; bottom: 100%; inset-inline: 0; background: var(--ink-2); border: 1px solid rgba(79, 195, 236, .35); border-bottom: 0; border-radius: 8px 8px 0 0; padding: 8px 14px; display: none; box-shadow: 0 -14px 30px rgba(0, 0, 0, .25); }
+  .fcol:hover .fl, .fcol:focus-within .fl { display: block; }
+  .fcol:hover h4, .fcol:focus-within h4 { background: var(--ink-2); padding-inline: 14px; }
+}
+@media not all and (hover: hover), (max-width: 900px) { .fhint { display: none; } .fcol h4::after { display: none; } .fl { padding-top: 6px; } }
+
+/* ===== Back to home ===== */
+.backlink { display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; margin-inline-end: 10px; border: 1.5px solid rgba(255, 255, 255, .4); border-radius: 6px; color: #fff; font-weight: 800; text-decoration: none; }
+.backlink:hover { border-color: var(--cyan); color: var(--cyan); }
+.crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+.backbar { padding-block: 34px 40px; background: var(--bg); border-top: 1px solid var(--line); }
+
+/* ===== Compact home ===== */
+.services { padding-block: 56px; }
+.final { padding-block: 52px; }
+.dest { padding-block: 52px; }
+.sec-head { margin-bottom: 26px; }
+.nav .dd-b { color: var(--on-ink-muted); }
+.nav .dd-b:hover, .nav .dd:hover > .dd-b, .nav .dd:focus-within > .dd-b { color: #fff; }
+.foot .fl a { color: #fff; font-weight: 600; }
+.foot .fl a:hover { color: var(--cyan); }
+
+.foot .cols { grid-template-columns: 1.3fr repeat(5, 1fr); }
+.dd-p.dd-2 { grid-template-columns: repeat(2, minmax(190px, 1fr)); min-width: 420px; }
+@media (hover: hover) and (min-width: 901px) {
+  .fl.fl-2 { min-width: 360px; columns: 2; column-gap: 18px; }
+  .fl.fl-2 a { break-inside: avoid; }
+  .fcol:nth-child(n+4) .fl.fl-2 { inset-inline: auto; inset-inline-end: 0; }
+}
+@media (max-width: 900px) { .foot .cols { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .fl.fl-2 { columns: 2; } }
+@media (max-width: 560px) { .foot .cols { grid-template-columns: minmax(0, 1fr); } .fl.fl-2 { columns: 1; } }
+
+.hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .95; z-index: 0; pointer-events: none; }
+.hero-shade { position: absolute; inset: 0; z-index: 0; pointer-events: none; background: linear-gradient(to left, rgba(12, 58, 95, .80) 0%, rgba(12, 58, 95, .55) 42%, rgba(12, 58, 95, .12) 100%); }
+.hero .wrap { position: relative; z-index: 1; }
+@media (prefers-reduced-motion: reduce) { .hero-video { display: none; } }
+html, body { overflow-x: clip; }
+@media (max-width: 560px) { .top .nav > .btn-go { display: none; } }
+
+.chk { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 20px; align-items: center; background: linear-gradient(160deg, var(--ink-2), var(--ink)); color: #fff; border-radius: 16px; padding: 26px 28px; }
+.chk h2 { color: #fff; font-size: 1.5rem; } .chk p { color: var(--on-ink-muted); margin-top: 6px; }
+.chk .btn { min-height: 54px; }
+@media (max-width: 700px) { .chk { grid-template-columns: minmax(0,1fr); padding: 22px 18px; } .chk .btn { width: 100%; } }
+
+.faq { max-width: 42em; margin-top: 28px; }
+.qa { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); margin-top: 10px; }
+.qa summary { list-style: none; cursor: pointer; padding: 16px; min-height: 52px; font-weight: 800; color: var(--ink); display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+.qa summary::-webkit-details-marker { display: none; }
+.qa summary::after { content: "+"; font-size: 1.5rem; color: var(--cyan); font-weight: 400; }
+.qa[open] summary::after { content: "−"; }
+.qa p { padding: 0 16px 16px; margin: 0; line-height: 1.75; }
+
+.foot .legal .teamlink { display: inline; padding: 0; text-decoration: underline; color: inherit; opacity: .8; }
+.top .top-auth,.top .top-phone,.top .btn-sm{white-space:nowrap}
+.top .top-auth{padding-inline:14px}
+@media (max-width:1500px){.top .top-phone{display:none}}
+@media (max-width:1250px){.top .nav{gap:10px}.top .nl{font-size:.88rem}.top .top-auth,.top .btn-sm{padding-inline:10px}}
+@media (max-width:560px){.top .top-auth{padding-inline:8px;font-size:.84rem}}
+.top .top-auth{color:#fff;border-color:rgba(255,255,255,.65);background:transparent}
+.top .top-auth:hover{background:rgba(255,255,255,.14)}
+.top .nl{white-space:nowrap}
+@media (max-width:1020px) and (min-width:901px){.top .nav>.btn-go{display:none}}
+
+.wiz { padding: 0; overflow: visible; }
+.wtabs { display: grid; grid-template-columns: repeat(3, 1fr); background: var(--bg); border-radius: 14px 14px 0 0; border-bottom: 1px solid var(--line); }
+.wtabs button { padding: 15px 8px; font: 800 .95rem var(--font-display, inherit); color: var(--muted); background: transparent; border: 0; border-bottom: 3px solid transparent; cursor: pointer; min-height: 52px; }
+.wtabs button:first-child { border-top-right-radius: 14px; } .wtabs button:last-child { border-top-left-radius: 14px; }
+.wtabs button.on { color: var(--ink); background: var(--surface); border-bottom-color: var(--cyan); }
+.wtabs button:hover:not(.on) { color: var(--ink); }
+.wiz .qform { padding: 22px 24px 24px; margin-top: 0; gap: 16px; }
+.wiz .step { display: grid; gap: 16px; }
+.wiz [hidden] { display: none !important; }
+.route { display: grid; gap: 10px; position: relative; }
+.lbl { display: block; font-weight: 800; font-size: .92rem; color: var(--ink); margin-bottom: 6px; }
+.lbl.sm { font-size: .86rem; color: var(--muted); }
+.cpick { position: relative; }
+.cbtn { width: 100%; min-height: 54px; display: flex; align-items: center; gap: 12px; padding: 8px 14px; border: 1.5px solid var(--line); border-radius: 12px; background: var(--bg); color: var(--fg); font: 700 1.05rem inherit; font-family: inherit; cursor: pointer; text-align: start; }
+.cbtn:hover { border-color: var(--muted); }
+.cbtn:focus-visible, .cbtn[aria-expanded="true"] { border-color: var(--ink); outline: none; box-shadow: 0 0 0 3px rgba(79, 195, 236, .35); }
+.cbtn .cname { flex: 1; } .cbtn .cname.ph { color: var(--muted); font-weight: 600; }
+.cbtn .chev { width: 9px; height: 9px; border-inline-end: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(45deg); margin-top: -4px; }
+.flg { width: 28px; height: 20px; border-radius: 3px; object-fit: cover; box-shadow: 0 0 0 1px rgba(16, 71, 114, .18); flex: none; background: var(--line); }
+.flg.em { box-shadow: none; background: none; font-size: 1.35rem; line-height: 1; width: auto; height: auto; }
+.cpanel { position: absolute; inset-inline: 0; top: calc(100% + 6px); z-index: 30; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 18px 40px rgba(12, 58, 95, .28); overflow: hidden; }
+.cpanel input { width: 100%; border: 0; border-bottom: 1px solid var(--line); padding: 13px 14px; font: 600 1rem inherit; font-family: inherit; background: var(--surface); color: var(--fg); outline: none; }
+.cpanel ul { list-style: none; margin: 0; padding: 4px; max-height: 260px; overflow-y: auto; }
+.cpanel li button { width: 100%; display: flex; align-items: center; gap: 12px; padding: 10px 12px; border: 0; background: transparent; border-radius: 8px; cursor: pointer; font: 600 1rem inherit; font-family: inherit; color: var(--fg); text-align: start; }
+.cpanel li button:hover, .cpanel li button:focus-visible { background: var(--bg); outline: none; }
+.cpanel li.sel button { color: var(--ink); font-weight: 800; }
+.cpanel .none { padding: 14px; color: var(--muted); }
+.swap { justify-self: center; width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); font-size: 1.2rem; cursor: pointer; margin: -2px 0; }
+.swap:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 8px 13px; border: 1.5px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--fg); font: 700 .98rem inherit; font-family: inherit; cursor: pointer; }
+.chip i { font-style: normal; color: var(--muted); font-size: 1.05rem; }
+.chip:hover { border-color: var(--muted); }
+.chip.on { background: var(--ink); border-color: var(--ink); color: #fff; }
+.chip.on i { color: var(--cyan); }
+.row3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 10px; margin-bottom: 10px; }
+.cfields { display: block; }
+.calcline { font-size: .9rem; color: var(--muted); min-height: 1.3em; }
+.calcline b { color: var(--ink); }
+.err { color: #B3261E; font-weight: 700; font-size: .92rem; }
+.sum { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; font-weight: 700; line-height: 1.7; }
+.sum span { display: block; color: var(--muted); font-weight: 600; font-size: .92rem; }
+.btn-back { background: none; border: 0; color: var(--ink); font: 700 .95rem inherit; font-family: inherit; text-decoration: underline; cursor: pointer; padding: 6px; justify-self: center; }
+.wiz .field input[type=number] { -moz-appearance: textfield; }
+@media (max-width: 560px) { .wiz .qform { padding: 18px 16px 20px; } .wtabs button { font-size: .86rem; padding: 12px 4px; } }
+@media (prefers-reduced-motion: no-preference) { .cpanel { animation: pop .12s ease-out; } @keyframes pop { from { opacity: 0; transform: translateY(-4px); } } }
+
+.dlg { border: 0; border-radius: 16px; padding: 0; width: min(520px, calc(100vw - 24px)); max-height: calc(100vh - 24px); color: var(--fg); background: var(--surface); box-shadow: 0 30px 80px rgba(7, 26, 44, .45); }
+.dlg::backdrop { background: rgba(7, 26, 44, .62); }
+.dlg-in { padding: 24px 22px 22px; display: grid; gap: 14px; position: relative; overflow-y: auto; max-height: calc(100vh - 24px); }
+.dlg-in h2 { font-size: 1.4rem; margin: 0; }
+.dlg-x { position: absolute; inset-block-start: 10px; inset-inline-start: 12px; width: 40px; height: 40px; border-radius: 50%; border: 0; background: var(--bg); color: var(--ink); font-size: 1.5rem; cursor: pointer; }
+.dlg .btn { width: 100%; margin-top: 4px; }
+.atabs { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--line); }
+.atabs button { min-height: 46px; background: none; border: 0; border-bottom: 3px solid transparent; font: 800 1rem inherit; font-family: inherit; color: var(--muted); cursor: pointer; }
+.atabs button.on { color: var(--ink); border-bottom-color: var(--cyan); }
+.aform { display: grid; gap: 12px; }
+.aor { text-align: center; color: var(--muted); font-size: .9rem; position: relative; }
+.aor span { background: var(--surface); padding: 0 12px; position: relative; }
+.aor::before { content: ""; position: absolute; inset-inline: 0; top: 50%; border-top: 1px solid var(--line); }
+.chk-row { display: flex; gap: 10px; align-items: flex-start; font-weight: 600; font-size: .95rem; line-height: 1.5; }
+.chk-row input { width: 22px; height: 22px; margin-top: 2px; flex: none; accent-color: var(--ink); }
+.row2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 480px) { .row2 { grid-template-columns: minmax(0, 1fr); } }
+</style>
+<div dir="rtl" lang="he"><a class="skip" href="#top">דלגו לתוכן הראשי</a><header class="top"><div class="wrap"><a class="brand" href="index.html" aria-label="CargoTech, לדף הראשי"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 721 100" role="img" aria-label="CargoTech"><defs><mask id="sh"><rect x="-10" y="-5" width="741" height="110" fill="#fff"/><rect x="462" y="46" width="150" height="6" fill="#000"/></mask></defs><g transform="translate(25 0) skewX(-14)"><g fill="#FFFFFF"><path transform="translate(0 0)" fill-rule="evenodd" d="M12 0H70V22H26V78H70V100H12L0 88V12Z"/><path transform="translate(78 0)" fill-rule="evenodd" d="M0 100L22 0H50L72 100H48L45 82H27L24 100ZM31 62H41L36 30Z"/><path transform="translate(158 0)" fill-rule="evenodd" d="M0 0H56L70 14V46L58 58L72 100H47L36 62H24V100H0ZM24 20V42H46V20Z"/><path transform="translate(236 0)" fill-rule="evenodd" d="M12 0H70V22H26V78H46V62H34V44H70V100H12L0 88V12Z"/><path transform="translate(314 0)" fill-rule="evenodd" d="M12 0H58L70 12V88L58 100H12L0 88V12ZM24 22V78H46V22Z"/></g><g fill="#4FC3EC" mask="url(#sh)"><path transform="translate(392 0)" fill-rule="evenodd" d="M0 0H72V22H48V100H24V22H0Z"/><path transform="translate(472 0)" fill-rule="evenodd" d="M0 0H66V22H24V38H58V58H24V78H66V100H0Z"/><path transform="translate(546 0)" fill-rule="evenodd" d="M12 0H70V22H26V78H70V100H12L0 88V12Z"/><path transform="translate(624 0)" fill-rule="evenodd" d="M0 0H24V38H48V0H72V100H48V62H24V100H0Z"/></g></g></svg></a><nav class="nav" aria-label="ניווט ראשי"><div class="dd"><button class="nl dd-b" type="button" aria-haspopup="true" aria-expanded="false">שירותים<i aria-hidden="true"></i></button><div class="dd-p"><a href="import.html">יבוא</a><a href="export.html">יצוא</a><a href="shipping.html">שילוח אווירי וימי</a><a href="courier.html">קורייר</a><a href="fda-food.html">מזון לארה"ב (FDA)</a><a href="customs.html">עמילות מכס</a></div></div><div class="dd"><button class="nl dd-b" type="button" aria-haspopup="true" aria-expanded="false">יעדים<i aria-hidden="true"></i></button><div class="dd-p dd-2"><a href="europe.html">אירופה</a><a href="usa.html">ארה"ב</a><a href="ship-to-france.html">שילוח לצרפת</a><a href="ship-to-germany.html">שילוח לגרמניה</a><a href="ship-to-spain.html">שילוח לספרד</a><a href="ship-to-italy.html">שילוח לאיטליה</a><a href="ship-to-netherlands.html">שילוח להולנד</a><a href="ship-to-greece.html">שילוח ליוון</a><a href="ship-to-uk.html">שילוח לבריטניה</a><a href="ship-to-ireland.html">שילוח לאירלנד</a><a href="ship-to-canada.html">שילוח לקנדה</a><a href="ship-to-australia.html">שילוח לאוסטרליה</a><a href="ship-to-china.html">שילוח לסין</a><a href="ship-to-turkey.html">שילוח לטורקיה</a><a href="ship-from-europe-to-israel.html">שילוח מאירופה לישראל</a><a href="ship-from-us-to-israel.html">שילוח מארה״ב לישראל</a><a href="ship-to-sweden.html">שילוח לשוודיה</a><a href="ship-to-portugal.html">שילוח לפורטוגל</a><a href="ship-from-china-to-israel.html">משלוחים מסין לישראל</a><a href="turkey-israel-shipping.html">שילוח טורקיה ישראל</a><a href="domestic-shipping-israel.html">משלוחים פנים ארציים</a><a href="ship-from-thailand-to-israel.html">שילוח מתאילנד לישראל</a><a href="ship-from-us-to-turkey.html">שילוח מארצות הברית לטורקיה</a></div></div><div class="dd"><button class="nl dd-b" type="button" aria-haspopup="true" aria-expanded="false">כלים<i aria-hidden="true"></i></button><div class="dd-p dd-2"><a href="data.html">בדיקת יבוא לפי מוצר</a><a href="pricing.html">מחשבון משקל ומחירון</a><a href="commercial-invoice.html">חשבונית מסחרית</a><a href="proforma-invoice.html">חשבונית פרופורמה</a><a href="packing-list.html">רשימת אריזה</a><a href="hs-code-guide.html">איתור פרט מכס</a><a href="import-taxes-israel.html">מיסי יבוא</a><a href="postal-codes-country-codes.html">קודי מדינות ומיקודים</a><a href="tracking-shipments.html">מעקב משלוחים</a><a href="glossary.html">מילון מונחים</a></div></div><div class="dd"><button class="nl dd-b" type="button" aria-haspopup="true" aria-expanded="false">מידע<i aria-hidden="true"></i></button><div class="dd-p dd-2"><a href="pricing.html">מחירון ומחשבון משקל</a><a href="glossary.html">מילון מונחים ושאלות</a><a href="articles.html">כל המדריכים</a><a href="article-customs-broker.html">מה זה עמילות מכס</a><a href="article-fcl-lcl.html">FCL או LCL: איך בוחרים</a><a href="article-volumetric-weight.html">משקל נפחי</a><a href="article-fda-prior-notice.html">Prior Notice של FDA</a><a href="send-gift-abroad.html">שליחת מתנה לחו״ל</a><a href="envelope-to-usa.html">שליחת מעטפה לארה״ב</a><a href="how-to-ship-package-abroad.html">איך שולחים חבילה לחו"ל</a><a href="international-shipping-complete-guide.html">מדריך שילוח בינלאומי</a></div></div><a class="nl" href="order.html">הזמנת משלוח</a><a class="nl" href="data.html">בדיקת יבוא</a><a class="nl" href="contact.html">צור קשר</a><a class="top-phone latin" data-phone href="contact.html">05X-XXX-XXXX</a><a class="btn btn-line-dark btn-sm top-auth" href="account.html" data-authbtn>כניסה</a><a class="btn btn-go btn-sm" href="#quote">הצעת מחיר</a><details class="mnav"><summary>תפריט</summary><div class="panel"><a href="order.html"><b>הזמנת משלוח</b></a><a href="data.html"><b>בדיקת יבוא לפי מוצר</b></a><a href="import.html">יבוא</a><a href="export.html">יצוא</a><a href="shipping.html">שילוח אווירי וימי</a><a href="courier.html">קורייר</a><a href="fda-food.html">מזון לארה"ב (FDA)</a><a href="customs.html">עמילות מכס</a><a href="europe.html">אירופה</a><a href="usa.html">ארה"ב</a><a href="data.html">בדיקת יבוא לפי מוצר</a><a href="pricing.html">מחשבון משקל ומחירון</a><a href="commercial-invoice.html">חשבונית מסחרית</a><a href="proforma-invoice.html">חשבונית פרופורמה</a><a href="packing-list.html">רשימת אריזה</a><a href="hs-code-guide.html">איתור פרט מכס</a><a href="import-taxes-israel.html">מיסי יבוא</a><a href="postal-codes-country-codes.html">קודי מדינות ומיקודים</a><a href="tracking-shipments.html">מעקב משלוחים</a><a href="glossary.html">מילון מונחים</a><a href="pricing.html">מחירון ומחשבון משקל</a><a href="glossary.html">מילון מונחים ושאלות</a><a href="articles.html">כל המדריכים</a><a href="contact.html">צור קשר</a><a href="account.html" data-authbtn><b>התחברות / הרשמה</b></a></div></details></nav></div></header><main id="top"><section class="hero"><video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="https://d8j0ntlcm91z4.cloudfront.net/user_37HsBZKzp3azVbNUBQIhUBwn3eG/hf_20261001_165123_05449b50-841d-49e8-a6aa-547c82591af0.png" aria-hidden="true" tabindex="-1"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_37HsBZKzp3azVbNUBQIhUBwn3eG/hf_20261005_210706_f5193365-ad84-4027-ac2f-8b78d749a66d.mp4" type="video/mp4"></video><span class="hero-shade" aria-hidden="true"></span>
+  <div class="wrap">
+    <div>
+      <div class="beat" aria-label="המילים קשות, הדרך פשוטה, הכל אפשרי"><span>המילים קשות</span><span>הדרך פשוטה</span><span>הכל אפשרי</span></div>
+      <h1>שילוח בינלאומי בלי לפענח את המילים</h1>
+      <p class="sub">יבוא, יצוא ושילוח לאירופה ולארה"ב. כל מונח מקבל הסבר בעברית פשוטה, וכל שלב במסמכים, במכס ובהובלה מטופל על ידינו.</p>
+      <div class="cta-row">
+        <a class="btn btn-go" href="#quote">קבלו הצעת מחיר</a>
+        <a class="btn btn-line" data-wa="שלום CargoTech, אני רוצה לבדוק שילוח." href="https://wa.me/" target="_blank" rel="noopener">דברו איתנו בוואטסאפ</a>
+      </div>
+      <p class="reassure">בלי התחייבות. הצעה ברורה לפני שמתחילים.</p>
+    </div>
+
+    
+<div class="qcard wiz" id="quote">
+  <div class="wtabs" role="tablist" aria-label="סוג שילוח">
+    <button type="button" role="tab" class="on" aria-selected="true" data-mode="intl">שילוח בינלאומי</button>
+    <button type="button" role="tab" aria-selected="false" data-mode="dom">שילוח בארץ</button>
+    <button type="button" role="tab" aria-selected="false" data-mode="reloc">הובלת דירה</button>
+  </div>
+  <form class="qform" id="qform" novalidate>
+    <input type="hidden" id="f-service" value="שילוח בינלאומי"><input type="hidden" id="f-route"><input type="hidden" id="f-cargo">
+    <div class="step" id="st1">
+      <div class="route" id="r-intl">
+        <div class="cpick" data-key="from"><span class="lbl">מאיפה</span></div>
+        <button type="button" class="swap" id="swap" aria-label="החלפת כיוון">⇅</button>
+        <div class="cpick" data-key="to"><span class="lbl">לאן</span></div>
+      </div>
+      <div class="route" id="r-dom" hidden>
+        <div class="field"><label for="d-from">מאיזו עיר</label><input id="d-from" list="cities" type="text" placeholder="לדוגמה: תל אביב"></div>
+        <div class="field"><label for="d-to">לאיזו עיר</label><input id="d-to" list="cities" type="text" placeholder="לדוגמה: חיפה"></div>
+        <datalist id="cities"><option value="תל אביב"><option value="ירושלים"><option value="חיפה"><option value="באר שבע"><option value="ראשון לציון"><option value="פתח תקווה"><option value="אשדוד"><option value="נתניה"><option value="חולון"><option value="בני ברק"><option value="רמת גן"><option value="אשקלון"><option value="רחובות"><option value="הרצליה"><option value="כפר סבא"><option value="רעננה"><option value="מודיעין"><option value="חדרה"><option value="נצרת"><option value="אילת"><option value="קריית שמונה"><option value="טבריה"><option value="עכו"><option value="כרמיאל"><option value="לוד"><option value="רמלה"><option value="בית שמש"><option value="נס ציונה"><option value="יבנה"><option value="עפולה"></datalist>
+      </div>
+      <div class="cg" id="cargo-group">
+        <span class="lbl">מה שולחים</span>
+        <div class="chips" id="ctype" role="group" aria-label="סוג מטען">
+          <button type="button" class="chip on" data-t="parcel" aria-pressed="true"><i>▢</i>חבילה</button>
+          <button type="button" class="chip" data-t="doc" aria-pressed="false"><i>▤</i>מסמך</button>
+          <button type="button" class="chip" data-t="pallet" aria-pressed="false"><i>▦</i>משטח</button>
+          <button type="button" class="chip" data-t="cont" aria-pressed="false" id="chip-cont"><i>▬</i>מכולה</button>
+        </div>
+        <div class="cfields" id="cf-parcel">
+          <div class="row3">
+            <div class="field"><label for="p-n">כמות</label><input id="p-n" type="number" min="1" value="1" inputmode="numeric"></div>
+            <div class="field"><label for="p-kg">משקל (ק״ג)</label><input id="p-kg" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0"></div>
+          </div>
+          <div class="row3">
+            <div class="field"><label for="p-l">אורך (ס״מ)</label><input id="p-l" type="number" min="0" inputmode="decimal" placeholder="0"></div>
+            <div class="field"><label for="p-w">רוחב (ס״מ)</label><input id="p-w" type="number" min="0" inputmode="decimal" placeholder="0"></div>
+            <div class="field"><label for="p-h">גובה (ס״מ)</label><input id="p-h" type="number" min="0" inputmode="decimal" placeholder="0"></div>
+          </div>
+          <p class="calcline" id="p-calc" aria-live="polite"></p>
+        </div>
+        <div class="cfields" id="cf-doc" hidden><p class="qnote">מעטפה או מסמכים עד כחצי קילו. אין צורך במידות.</p></div>
+        <div class="cfields" id="cf-pallet" hidden>
+          <div class="row3">
+            <div class="field"><label for="q-n">כמות משטחים</label><input id="q-n" type="number" min="1" value="1" inputmode="numeric"></div>
+            <div class="field"><label for="q-kg">משקל למשטח (ק״ג)</label><input id="q-kg" type="number" min="0" inputmode="decimal" placeholder="0"></div>
+          </div>
+          <div class="row3">
+            <div class="field"><label for="q-l">אורך (ס״מ)</label><input id="q-l" type="number" min="0" inputmode="decimal" placeholder="120"></div>
+            <div class="field"><label for="q-w">רוחב (ס״מ)</label><input id="q-w" type="number" min="0" inputmode="decimal" placeholder="80"></div>
+            <div class="field"><label for="q-h">גובה (ס״מ)</label><input id="q-h" type="number" min="0" inputmode="decimal" placeholder="0"></div>
+          </div>
+        </div>
+        <div class="cfields" id="cf-cont" hidden>
+          <span class="lbl sm">איזו מכולה</span>
+          <div class="chips" id="feet" role="group" aria-label="גודל מכולה">
+            <button type="button" class="chip on" data-v="מכולה 20 פיט" aria-pressed="true">20 פיט</button>
+            <button type="button" class="chip" data-v="מכולה 40 פיט" aria-pressed="false">40 פיט</button>
+            <button type="button" class="chip" data-v="מכולה 40 פיט HC (גבוהה)" aria-pressed="false">40 פיט HC</button>
+            <button type="button" class="chip" data-v="חלק ממכולה (LCL)" aria-pressed="false">חלק ממכולה</button>
+          </div>
+          <div class="field" style="max-width:150px"><label for="c-n2">כמות מכולות</label><input id="c-n2" type="number" min="1" value="1" inputmode="numeric"></div>
+        </div>
+      </div>
+      <div class="cg" id="reloc-group" hidden>
+        <span class="lbl">גודל ההובלה</span>
+        <div class="chips" id="rsize" role="group" aria-label="גודל ההובלה">
+          <button type="button" class="chip on" data-v="קרטונים ומעט רהיטים" aria-pressed="true">קרטונים ומעט רהיטים</button>
+          <button type="button" class="chip" data-v="דירת 1-3 חדרים" aria-pressed="false">דירת 1 עד 3 חדרים</button>
+          <button type="button" class="chip" data-v="דירת 4 חדרים ומעלה" aria-pressed="false">דירת 4 חדרים ומעלה</button>
+          <button type="button" class="chip" data-v="בית או משרד" aria-pressed="false">בית או משרד</button>
+        </div>
+      </div>
+      <p class="err" id="werr" role="alert" hidden></p>
+      <button type="button" class="btn btn-go" id="wnext">קבלת מחיר</button>
+    </div>
+    <div class="step" id="st2" hidden>
+      <div class="sum" id="wsum"></div>
+      <div class="row2">
+        <div class="field"><label for="f-name">שם</label><input id="f-name" type="text" autocomplete="name" placeholder="השם שלכם"></div>
+        <div class="field"><label for="f-phone">טלפון</label><input id="f-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="05X-XXX-XXXX"></div>
+      </div>
+      <a class="btn btn-go" id="send-wa" href="https://wa.me/" target="_blank" rel="noopener">שלחו לנו בוואטסאפ</a>
+      <button type="button" class="btn-back" id="wback">→ חזרה לעריכת המסלול</button>
+      <p class="qnote">הפרטים נפתחים כהודעה מוכנה בוואטסאפ, ונשמרים אצלנו רק כדי לחזור אליכם.</p>
+    </div>
+  </form>
+</div>
+
+  </div>
+<div class="lanes"><div class="wrap"><a href="import.html"><i>01</i><span>יבוא</span></a><a href="export.html"><i>02</i><span>יצוא</span></a><a href="shipping.html"><i>03</i><span>שילוח אווירי וימי</span></a></div></div></section>
+
+<div class="carriers">
+  <div class="wrap">
+    <span class="lead">עובדים מול חברות הקורייר</span>
+    <span class="names latin"><span>DHL</span><span>FedEx</span><span>UPS</span><span>Aramex</span></span>
+    <span class="lead">ומשווים ביניהן כדי למצוא את המחיר והמהירות שמתאימים לכם</span>
+  </div>
+</div>
+
+<section class="sec"><div class="wrap"><div class="chk"><div><h2>רוצים להביא מוצר? בדקו מה נדרש</h2><p>הקלידו שם מוצר וראו אילו דרישות חוקיות חלות עליו. את המיסים נחשב יחד.</p></div><a class="btn btn-go" href="data.html">בדיקת יבוא לפי מוצר</a></div></div></section><section class="sec services" id="services">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>כל מה שהמטען שלכם צריך, במקום אחד</h2>
+      <p>בוחרים שירות, מקבלים הצעה. כל כרטיס מוביל ישר לטופס, עם השירות כבר מסומן.</p>
+    </div>
+    <div class="svc-grid">
+      <article class="svc">
+        <h3>יבוא</h3>
+        <p>מהזמנה אצל הספק ועד הדלת שלכם: הובלה, מכס, מסמכים ותיאום מול הצוות בארץ המוצא.</p>
+        <a class="more" href="import.html">לפרטים נוספים</a><button class="go" data-service="יבוא" type="button">בדקו מחיר ליבוא</button>
+      </article>
+      <article class="svc">
+        <h3>יצוא</h3>
+        <p>שולחים סחורה ללקוחות בחו"ל עם התיעוד הנכון ועם מי שמקבל אותה בצד השני.</p>
+        <a class="more" href="export.html">לפרטים נוספים</a><button class="go" data-service="יצוא" type="button">בדקו מחיר ליצוא</button>
+      </article>
+      <article class="svc">
+        <h3>שילוח אווירי וימי</h3>
+        <p>אוויר כשדחוף, ים כשחסכוני. נשווה ביניהם לפי המשקל, הנפח והתאריך שחשוב לכם.</p>
+        <a class="more" href="shipping.html">לפרטים נוספים</a><button class="go" data-service="שילוח אווירי או ימי" type="button">בדקו מחיר לשילוח</button>
+      </article>
+      <article class="svc">
+        <h3>קורייר</h3>
+        <p>חבילות ומסמכים במהירות. עובדים מול כל חברות הקורייר, ולכן בוחרים לפי מחיר וזמן.</p>
+        <a class="more" href="courier.html">לפרטים נוספים</a><button class="go" data-service="קורייר" type="button">בדקו מחיר לקורייר</button>
+      </article>
+      <article class="svc">
+        <span class="tag latin">FDA</span>
+        <h3>מזון לארה"ב</h3>
+        <p>אישורי FDA והודעה מוקדמת, כדי שהמזון יגיע ליעד ולא ייתקע בגבול.</p>
+        <a class="more" href="fda-food.html">לפרטים נוספים</a><button class="go" data-service="מזון לארה&quot;ב (FDA)" type="button">בדקו מה נדרש למזון</button>
+      </article>
+      <article class="svc">
+        <h3>עמילות מכס</h3>
+        <p>שחרור מהמכס, סיווג וחישוב מסים. מי שמטפל בזה כל יום עושה את זה בלי הפתעות.</p>
+        <a class="more" href="customs.html">לפרטים נוספים</a><button class="go" data-service="עמילות מכס" type="button">בדקו מחיר לעמילות</button>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec dest" id="dest">
+  <div class="wrap">
+    <div>
+      <h2>אירופה וארה"ב, עם צוות בכל מדינה</h2>
+      <p>המטען לא נשאר לבד בצד השני. בכל מדינה יש מי שמקבל אותו, מטפל במכס המקומי ומוסר אותו ליעד.</p>
+      <ul>
+        <li>יבוא ויצוא בין ישראל לכל אירופה</li>
+        <li>שילוח לארה"ב ומארה"ב</li>
+        <li>אישורי FDA ו-Prior Notice למזון</li>
+      </ul>
+      <a class="btn btn-go" href="#quote">בדקו את המסלול שלכם</a> <a class="more" style="color:var(--on-ink);margin-inline-start:16px" href="europe.html">אירופה</a> <a class="more" style="color:var(--on-ink)" href="usa.html">ארה"ב</a>
+    </div>
+    <svg class="routemap" viewBox="0 0 440 320" role="img" aria-label="מפה סכמטית של מסלולי שילוח מישראל לאירופה ולארה&quot;ב">
+      <path id="r-eu" class="path" d="M350 210 C 320 120, 240 80, 160 84"/>
+      <path id="r-us" class="path" d="M350 210 C 280 300, 140 290, 62 190"/>
+      <circle class="node-ring" cx="350" cy="210" r="15"/><circle class="node" cx="350" cy="210" r="7"/>
+      <text class="lbl" x="350" y="248" text-anchor="middle">ישראל</text>
+      <circle class="node-ring" cx="160" cy="84" r="15"/><circle class="node" cx="160" cy="84" r="7"/>
+      <text class="lbl" x="160" y="58" text-anchor="middle">אירופה</text>
+      <circle class="node-ring" cx="62" cy="190" r="15"/><circle class="node" cx="62" cy="190" r="7"/>
+      <text class="lbl" x="62" y="228" text-anchor="middle">ארה"ב</text>
+      <rect class="pkg" id="pkg1" x="-6" y="-6" width="12" height="12" rx="2"><animateMotion dur="5s" repeatCount="indefinite"><mpath href="#r-eu"/></animateMotion></rect>
+      <rect class="pkg" id="pkg2" x="-6" y="-6" width="12" height="12" rx="2"><animateMotion dur="7s" repeatCount="indefinite"><mpath href="#r-us"/></animateMotion></rect>
+    </svg>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <div class="beat" style="margin:0"><span>המילים קשות</span><span>הדרך פשוטה</span><span>הכל אפשרי</span></div>
+    <h2>יש לכם מטען? מתחילים בשיחה.</h2>
+    <p>ספרו לנו מה אתם רוצה להעביר, ואנחנו נחזור עם הצעה ועם הסבר על כל מה שצריך לדעת.</p>
+    <div class="cta-row">
+      <a class="btn btn-go" href="#quote">קבלו הצעת מחיר</a>
+      <a class="btn btn-line" data-wa="שלום CargoTech, אני רוצה לבדוק שילוח." href="https://wa.me/" target="_blank" rel="noopener">וואטסאפ</a>
+    </div>
+    <div class="contact-lines">
+      <div><span>טלפון</span><b class="latin" data-phone>05X-XXX-XXXX</b></div>
+      <div><span>אימייל</span><b class="latin" data-email>office@your-domain.co.il</b></div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var wiz = document.getElementById("quote"); if (!wiz || !wiz.classList.contains("wiz")) return;
+  var COUNTRIES = "il ישראל|us ארצות הברית|gb בריטניה|de גרמניה|fr צרפת|it איטליה|es ספרד|nl הולנד|gr יוון|tr טורקיה|cn סין|ca קנדה|au אוסטרליה|ie אירלנד|cy קפריסין|pt פורטוגל|be בלגיה|at אוסטריה|ch שווייץ|ae איחוד האמירויות|ug אוגנדה|uz אוזבקיסטן|ua אוקראינה|uy אורוגוואי|az אזרבייג׳ן|bs איי בהאמה|mh איי מרשל|sb איי שלמה|is איסלנד|sv אל סלבדור|al אלבניה|ao אנגולה|ad אנדורה|ag אנטיגואה וברבודה|sz אסוואטיני|ee אסטוניה|ec אקוודור|ar ארגנטינה|er אריתריאה|am ארמניה|et אתיופיה|bt בהוטן|bg בולגריה|ba בוסניה והרצגובינה|bw בוצואנה|bi בורונדי|bf בורקינה פאסו|bh בחריין|by בלארוס|bj בנין|bb ברבדוס|br ברזיל|ge גאורגיה|gh גאנה|ga גבון|gt גואטמלה|gy גיאנה|gn גינאה|gq גינאה המשוונית|gw גינאה-ביסאו|gm גמביה|gd גרנדה|jm ג׳מייקה|dm דומיניקה|dk דנמרק|za דרום אפריקה|ss דרום סודן|kr דרום קוריאה|ht האיטי|in הודו|va הוותיקן|hk הונג קונג|hu הונגריה|hn הונדורס|ph הפיליפינים|do הרפובליקה הדומיניקנית|cd הרפובליקה הדמוקרטית של קונגו|cf הרפובליקה המרכז אפריקאית|cg הרפובליקה של קונגו|vn וייטנאם|vu ונואטו|zw זימבבואה|zm זמביה|ci חוף השנהב|tj טג׳יקיסטן|tv טובאלו|tg טוגו|to טונגה|tm טורקמניסטן|tw טייוואן|tz טנזניה|tt טרינידד וטובגו|jp יפן|jo ירדן|cv כף ורדה|la לאוס|lu לוקסמבורג|lv לטביה|lr ליבריה|lt ליטא|li ליכטנשטיין|ls לסוטו|mu מאוריציוס|ml מאלי|mg מדגסקר|mz מוזמביק|md מולדובה|mn מונגוליה|me מונטנגרו|mc מונקו|mm מיאנמר|fm מיקרונזיה|mw מלאווי|mt מלטה|eg מצרים|mo מקאו|mk מקדוניה הצפונית|mx מקסיקו|ma מרוקו|nr נאורו|no נורווגיה|ng ניגריה|nz ניו זילנד|ne ניז׳ר|na נמיביה|np נפאל|st סאו טומה ופרינסיפה|sr סורינאם|sl סיירה לאון|sc סיישל|sg סינגפור|si סלובניה|sk סלובקיה|ws סמואה|sm סן מרינו|sn סנגל|vc סנט וינסנט והגרנדינים|lc סנט לוסיה|kn סנט קיטס ונוויס|rs סרביה|lk סרי לנקה|om עומאן|pl פולין|fj פיג׳י|fi פינלנד|pw פלאו|pa פנמה|pg פפואה גינאה החדשה|py פרגוואי|pe פרו|td צ׳אד|cl צ׳ילה|cz צ׳כיה|xk קוסובו|cr קוסטה ריקה|kz קזחסטן|kg קירגיזסטן|ki קיריבטי|kh קמבודיה|cm קמרון|ke קניה|hr קרואטיה|rw רואנדה|ro רומניה|ru רוסיה|se שוודיה|th תאילנד".split("|").map(function (s) { var i = s.indexOf(" "); return { c: s.slice(0, i), n: s.slice(i + 1) }; });
+  var $ = function (id) { return document.getElementById(id); };
+  var mode = "intl", ctype = "parcel", sel = { from: "il", to: "" };
+  var emoji = function (c) { return String.fromCodePoint.apply(null, c.toUpperCase().split("").map(function (ch) { return 127397 + ch.charCodeAt(0); })); };
+  var byCode = {}; COUNTRIES.forEach(function (o) { byCode[o.c] = o; });
+  function flag(c) {
+    var im = document.createElement("img"); im.className = "flg"; im.alt = ""; im.width = 28; im.height = 20; im.loading = "lazy";
+    im.src = "https://flagcdn.com/w40/" + c + ".png";
+    im.onerror = function () { var s = document.createElement("span"); s.className = "flg em"; s.textContent = emoji(c); if (im.parentNode) im.parentNode.replaceChild(s, im); };
+    return im;
+  }
+  function fire(el) { el.dispatchEvent(new Event("input", { bubbles: true })); }
+  var pickers = {};
+  document.querySelectorAll(".cpick").forEach(function (box) {
+    var key = box.getAttribute("data-key"), btn = document.createElement("button"), panel = document.createElement("div"), open = false;
+    btn.type = "button"; btn.className = "cbtn"; btn.setAttribute("aria-haspopup", "listbox"); btn.setAttribute("aria-expanded", "false");
+    panel.className = "cpanel"; panel.hidden = true;
+    var inp = document.createElement("input"); inp.type = "search"; inp.placeholder = "חיפוש מדינה"; inp.setAttribute("aria-label", "חיפוש מדינה"); inp.autocomplete = "off";
+    var ul = document.createElement("ul"); ul.setAttribute("role", "listbox");
+    panel.appendChild(inp); panel.appendChild(ul); box.appendChild(btn); box.appendChild(panel);
+    function paint() {
+      btn.innerHTML = ""; var c = sel[key], nm = document.createElement("span"); nm.className = "cname";
+      if (c) { btn.appendChild(flag(c)); nm.textContent = byCode[c].n; } else { nm.className += " ph"; nm.textContent = "בחרו מדינה"; }
+      btn.appendChild(nm); var ch = document.createElement("i"); ch.className = "chev"; btn.appendChild(ch);
+    }
+    function list() {
+      var q = inp.value.trim(); ul.innerHTML = ""; var n = 0;
+      COUNTRIES.forEach(function (o) {
+        if (q && o.n.indexOf(q) < 0) return; n++;
+        var li = document.createElement("li"); li.setAttribute("role", "option"); if (sel[key] === o.c) { li.className = "sel"; li.setAttribute("aria-selected", "true"); }
+        var b = document.createElement("button"); b.type = "button"; b.appendChild(flag(o.c)); var t = document.createElement("span"); t.textContent = o.n; b.appendChild(t);
+        b.addEventListener("click", function () { sel[key] = o.c; close(); paint(); update(); }); li.appendChild(b); ul.appendChild(li);
+      });
+      if (!n) { var d = document.createElement("li"); d.className = "none"; d.textContent = "לא נמצאה מדינה בשם הזה."; ul.appendChild(d); }
+    }
+    function close() { open = false; panel.hidden = true; btn.setAttribute("aria-expanded", "false"); }
+    function show() { Object.keys(pickers).forEach(function (k) { if (k !== key) pickers[k].close(); }); open = true; inp.value = ""; list(); panel.hidden = false; btn.setAttribute("aria-expanded", "true"); inp.focus(); var s = ul.querySelector(".sel"); if (s) s.scrollIntoView({ block: "nearest" }); }
+    btn.addEventListener("click", function () { open ? close() : show(); });
+    inp.addEventListener("input", list);
+    inp.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); var f = ul.querySelector("button"); if (f) f.click(); } if (e.key === "ArrowDown") { e.preventDefault(); var f2 = ul.querySelector("button"); if (f2) f2.focus(); } });
+    panel.addEventListener("keydown", function (e) { if (e.key === "Escape") { close(); btn.focus(); } if (e.target.tagName === "BUTTON" && (e.key === "ArrowDown" || e.key === "ArrowUp")) { e.preventDefault(); var all = Array.prototype.slice.call(ul.querySelectorAll("button")), i = all.indexOf(e.target) + (e.key === "ArrowDown" ? 1 : -1); if (i < 0) inp.focus(); else if (all[i]) all[i].focus(); } });
+    pickers[key] = { close: close, paint: paint };
+    paint();
+  });
+  document.addEventListener("click", function (e) { if (!e.target.closest(".cpick")) Object.keys(pickers).forEach(function (k) { pickers[k].close(); }); });
+  $("swap").addEventListener("click", function () { var t = sel.from; sel.from = sel.to; sel.to = t; pickers.from.paint(); pickers.to.paint(); update(); });
+
+  var num = function (id) { return parseFloat($(id).value) || 0; };
+  function cargoText() {
+    if (mode === "reloc") return "הובלת דירה: " + document.querySelector("#rsize .on").getAttribute("data-v");
+    if (ctype === "doc") return "מסמך";
+    if (ctype === "parcel") { var s = "חבילה: " + (num("p-n") || 1) + " יח׳"; if (num("p-kg")) s += ", " + num("p-kg") + " ק״ג"; if (num("p-l") || num("p-w") || num("p-h")) s += ", " + num("p-l") + "×" + num("p-w") + "×" + num("p-h") + " ס״מ"; return s; }
+    if (ctype === "pallet") { var p = "משטח: " + (num("q-n") || 1) + " יח׳"; if (num("q-kg")) p += ", " + num("q-kg") + " ק״ג למשטח"; if (num("q-l") || num("q-w") || num("q-h")) p += ", " + num("q-l") + "×" + num("q-w") + "×" + num("q-h") + " ס״מ"; return p; }
+    return document.querySelector("#feet .on").getAttribute("data-v") + ", כמות: " + (num("c-n2") || 1);
+  }
+  function routeText() {
+    if (mode === "dom") return ($("d-from").value.trim() || "?") + " ← " + ($("d-to").value.trim() || "?");
+    return (sel.from ? byCode[sel.from].n : "?") + " ← " + (sel.to ? byCode[sel.to].n : "?");
+  }
+  function update() {
+    $("f-service").value = { intl: "שילוח בינלאומי", dom: "שילוח בארץ", reloc: "הובלת דירה (רילוקיישן)" }[mode];
+    $("f-route").value = routeText(); $("f-cargo").value = cargoText();
+    ["f-service", "f-route", "f-cargo"].forEach(function (id) { fire($(id)); });
+    var v = num("p-l") * num("p-w") * num("p-h") * (num("p-n") || 1) / 5000, r = num("p-kg") * (num("p-n") || 1);
+    $("p-calc").innerHTML = (v || r) ? "משקל לחיוב משוער: <b>" + (Math.round(Math.max(v, r) * 10) / 10) + " ק״ג</b> (המחושב הגבוה מבין המשקל האמיתי והנפחי)" : "";
+  }
+  function setMode(m) {
+    mode = m;
+    document.querySelectorAll(".wtabs button").forEach(function (b) { var on = b.getAttribute("data-mode") === m; b.classList.toggle("on", on); b.setAttribute("aria-selected", on); });
+    $("r-intl").hidden = m === "dom"; $("r-dom").hidden = m !== "dom";
+    $("cargo-group").hidden = m === "reloc"; $("reloc-group").hidden = m !== "reloc";
+    $("chip-cont").hidden = m !== "intl";
+    if (m !== "intl" && ctype === "cont") setType("parcel");
+    if (m === "reloc") { if (!sel.to) sel.to = ""; }
+    if (m === "dom") sel = { from: "il", to: "il" }; else if (sel.from === "il" && sel.to === "il") sel.to = "";
+    pickers.from.paint(); pickers.to.paint(); $("werr").hidden = true; update();
+  }
+  document.querySelectorAll(".wtabs button").forEach(function (b) { b.addEventListener("click", function () { setMode(b.getAttribute("data-mode")); }); });
+  function setType(t) {
+    ctype = t;
+    document.querySelectorAll("#ctype .chip").forEach(function (b) { var on = b.getAttribute("data-t") === t; b.classList.toggle("on", on); b.setAttribute("aria-pressed", on); });
+    ["parcel", "doc", "pallet", "cont"].forEach(function (k) { $("cf-" + k).hidden = k !== t; }); update();
+  }
+  document.querySelectorAll("#ctype .chip").forEach(function (b) { b.addEventListener("click", function () { setType(b.getAttribute("data-t")); }); });
+  ["feet", "rsize"].forEach(function (id) { document.querySelectorAll("#" + id + " .chip").forEach(function (b) { b.addEventListener("click", function () { document.querySelectorAll("#" + id + " .chip").forEach(function (x) { x.classList.toggle("on", x === b); x.setAttribute("aria-pressed", x === b); }); update(); }); }); });
+  wiz.querySelectorAll("input[type=number], #d-from, #d-to").forEach(function (el) { el.addEventListener("input", update); });
+  $("wnext").addEventListener("click", function () {
+    var er = $("werr"), msg = "";
+    if (mode === "dom") { if (!$("d-from").value.trim() || !$("d-to").value.trim()) msg = "כתבו עיר מוצא ועיר יעד."; }
+    else if (!sel.from || !sel.to) msg = "בחרו מדינת מוצא ומדינת יעד.";
+    else if (sel.from === sel.to) msg = "מדינת המוצא והיעד זהות. בחרו יעד אחר.";
+    if (!msg && mode === "intl" && ctype === "parcel" && !num("p-kg")) msg = "הוסיפו משקל לחבילה, גם הערכה מספיקה.";
+    if (msg) { er.textContent = msg; er.hidden = false; return; }
+    er.hidden = true; update();
+    if (mode === "intl") {
+      var seed = { from: sel.from, to: sel.to, type: ctype };
+      if (ctype === "parcel") seed.parcels = [{ qty: num("p-n") || 1, kg: num("p-kg") || "", l: num("p-l") || "", w: num("p-w") || "", h: num("p-h") || "" }];
+      if (ctype === "pallet") seed.parcels = [{ qty: num("q-n") || 1, kg: num("q-kg") || "", l: num("q-l") || "", w: num("q-w") || "", h: num("q-h") || "" }];
+      if (ctype === "cont") seed.cont = { size: document.querySelector("#feet .on").getAttribute("data-v"), qty: num("c-n2") || 1 };
+      try { sessionStorage.setItem("ct_seed", JSON.stringify(seed)); } catch (e) {}
+      location.href = "order.html"; return;
+    }
+    $("wsum").innerHTML = "<b>" + $("f-service").value + "</b><span>" + $("f-route").value + "</span><span>" + $("f-cargo").value + "</span>";
+    $("st1").hidden = true; $("st2").hidden = false; $("f-name").focus({ preventScroll: true });
+  });
+  $("wback").addEventListener("click", function () { $("st2").hidden = true; $("st1").hidden = false; });
+  update();
+})();
+</script>
+<dialog id="authdlg" class="dlg" aria-labelledby="auth-h">
+  <div class="dlg-in">
+    <button type="button" class="dlg-x" id="auth-x" aria-label="סגירה">×</button>
+    <h2 id="auth-h">התחברות והרשמה</h2>
+    <div class="atabs" role="tablist">
+      <button type="button" role="tab" class="on" data-t="in" aria-selected="true">התחברות</button>
+      <button type="button" role="tab" data-t="up" aria-selected="false">הרשמה</button>
+    </div>
+    <form id="auth-in" class="aform" novalidate>
+      <div class="field"><label for="ai-mail">אימייל</label><input id="ai-mail" type="email" autocomplete="email" inputmode="email"></div>
+      <div class="field"><label for="ai-pw">סיסמה</label><input id="ai-pw" type="password" autocomplete="current-password"></div>
+      <p class="err" id="ai-err" role="alert" hidden></p>
+      <button class="btn btn-go" type="submit">התחברות</button>
+      <button class="btn-back" type="button" id="ai-forgot">שכחתי סיסמה</button>
+    </form>
+    <form id="auth-up" class="aform" hidden novalidate>
+      <div class="row2">
+        <div class="field"><label for="au-fn">שם פרטי</label><input id="au-fn" type="text" autocomplete="given-name"></div>
+        <div class="field"><label for="au-ln">שם משפחה</label><input id="au-ln" type="text" autocomplete="family-name"></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label for="au-mail">אימייל</label><input id="au-mail" type="email" autocomplete="email" inputmode="email"></div>
+        <div class="field"><label for="au-ph">טלפון</label><input id="au-ph" type="tel" autocomplete="tel" inputmode="tel"></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label for="au-pw">סיסמה (לפחות 6 תווים)</label><input id="au-pw" type="password" autocomplete="new-password"></div>
+        <div class="field"><label for="au-pw2">אימות סיסמה</label><input id="au-pw2" type="password" autocomplete="new-password"></div>
+      </div>
+      <div class="field"><label for="au-use">אני משתמש בשירות עבור</label>
+        <select id="au-use"><option value="">בחרו</option><option value="private">שימוש פרטי</option><option value="business">עסק</option></select></div>
+      <div class="field"><label for="au-cp">קוד קופון (אופציונלי)</label><input id="au-cp" type="text" autocomplete="off"></div>
+      <label class="chk-row"><input type="checkbox" id="au-mk"> אשמח לקבל עדכונים והודעות במייל</label>
+      <p class="err" id="au-err" role="alert" hidden></p>
+      <button class="btn btn-go" type="submit">הרשמה</button>
+    </form>
+    <div class="aor"><span>או</span></div>
+    <button class="btn btn-line-dark" type="button" id="auth-g">המשך עם Google</button>
+  </div>
+</dialog>
+</main><footer class="foot"><div class="wrap"><div class="cols"><div class="fbrand"><a class="brandline" href="index.html">CargoTech</a><p>יבוא, יצוא ושילוח בינלאומי. המילים קשות, הדרך פשוטה, הכל אפשרי.</p></div><div class="fcol" tabindex="0"><h4>שירותים</h4><div class="fl"><a href="import.html">יבוא</a><a href="export.html">יצוא</a><a href="shipping.html">שילוח אווירי וימי</a><a href="courier.html">קורייר</a><a href="fda-food.html">מזון לארה"ב (FDA)</a><a href="customs.html">עמילות מכס</a></div></div><div class="fcol" tabindex="0"><h4>שילוח לפי יעד</h4><div class="fl fl-2"><a href="europe.html">אירופה</a><a href="usa.html">ארה"ב</a><a href="ship-to-france.html">שילוח לצרפת</a><a href="ship-to-germany.html">שילוח לגרמניה</a><a href="ship-to-spain.html">שילוח לספרד</a><a href="ship-to-italy.html">שילוח לאיטליה</a><a href="ship-to-netherlands.html">שילוח להולנד</a><a href="ship-to-greece.html">שילוח ליוון</a><a href="ship-to-uk.html">שילוח לבריטניה</a><a href="ship-to-ireland.html">שילוח לאירלנד</a><a href="ship-to-canada.html">שילוח לקנדה</a><a href="ship-to-australia.html">שילוח לאוסטרליה</a><a href="ship-to-china.html">שילוח לסין</a><a href="ship-to-turkey.html">שילוח לטורקיה</a><a href="ship-from-europe-to-israel.html">שילוח מאירופה לישראל</a><a href="ship-from-us-to-israel.html">שילוח מארה״ב לישראל</a><a href="ship-to-sweden.html">שילוח לשוודיה</a><a href="ship-to-portugal.html">שילוח לפורטוגל</a><a href="ship-from-china-to-israel.html">משלוחים מסין לישראל</a><a href="turkey-israel-shipping.html">שילוח טורקיה ישראל</a><a href="domestic-shipping-israel.html">משלוחים פנים ארציים</a><a href="ship-from-thailand-to-israel.html">שילוח מתאילנד לישראל</a><a href="ship-from-us-to-turkey.html">שילוח מארצות הברית לטורקיה</a></div></div><div class="fcol" tabindex="0"><h4>מדריכים</h4><div class="fl fl-2"><a href="article-customs-broker.html">מה זה עמילות מכס</a><a href="article-fcl-lcl.html">FCL או LCL: איך בוחרים</a><a href="article-volumetric-weight.html">משקל נפחי</a><a href="article-fda-prior-notice.html">Prior Notice של FDA</a><a href="send-gift-abroad.html">שליחת מתנה לחו״ל</a><a href="envelope-to-usa.html">שליחת מעטפה לארה״ב</a><a href="how-to-ship-package-abroad.html">איך שולחים חבילה לחו"ל</a><a href="international-shipping-complete-guide.html">מדריך שילוח בינלאומי</a><a href="commercial-invoice.html">חשבונית מסחרית</a><a href="proforma-invoice.html">חשבונית פרופורמה</a><a href="packing-list.html">רשימת אריזה</a><a href="prohibited-goods.html">סחורה אסורה לשילוח</a><a href="ship-fragile-items.html">שילוח פריטים שבירים</a><a href="postal-codes-country-codes.html">מיקוד וקודי מדינה</a><a href="articles.html#guides">כל המדריכים ←</a></div></div><div class="fcol" tabindex="0"><h4>כלים</h4><div class="fl fl-2"><a href="data.html">בדיקת יבוא לפי מוצר</a><a href="pricing.html">מחשבון משקל ומחירון</a><a href="commercial-invoice.html">חשבונית מסחרית</a><a href="proforma-invoice.html">חשבונית פרופורמה</a><a href="packing-list.html">רשימת אריזה</a><a href="hs-code-guide.html">איתור פרט מכס</a><a href="import-taxes-israel.html">מיסי יבוא</a><a href="postal-codes-country-codes.html">קודי מדינות ומיקודים</a><a href="tracking-shipments.html">מעקב משלוחים</a><a href="glossary.html">מילון מונחים</a></div></div><div class="fcol" tabindex="0"><h4>מידע</h4><div class="fl"><a href="pricing.html">מחירון ומחשבון משקל</a><a href="glossary.html">מילון מונחים ושאלות</a><a href="data.html">בדיקת יבוא לפי מוצר</a><a href="contact.html">צור קשר</a></div></div></div><p class="fhint">העבירו את העכבר על נושא כדי לראות את הדפים שלו</p><div class="legal"><span>© CargoTech · <a class="teamlink" href="https://cargotech-admin.web.app" rel="nofollow noopener">כניסת צוות</a></span><span><b class="latin" data-phone>05X-XXX-XXXX</b> · <span class="latin" data-email>office@your-domain.co.il</span></span></div></div></footer><div class="bar"><a class="btn btn-go" href="#quote">הצעת מחיר</a><a class="btn btn-line" data-wa="שלום CargoTech, אני רוצה לבדוק שילוח." href="https://wa.me/" target="_blank" rel="noopener">וואטסאפ</a></div></div><script>
+var CONFIG = {
+  whatsapp: "",               /* international format, digits only, e.g. 972501234567 */
+  phoneDisplay: "05X-XXX-XXXX",
+  email: "office@your-domain.co.il",
+  leadApi: "/api/lead",       /* Firebase Function that stores quote requests in Firestore; leave empty to disable */
+  measurementId: "G-FCV82YGNTB"           /* Firebase / GA4 measurement ID, e.g. G-XXXXXXXXXX; leave empty to disable analytics */
+};
+(function () {
+  var base = CONFIG.whatsapp ? "https://wa.me/" + CONFIG.whatsapp : "https://wa.me/";
+  function wa(text) { return base + "?text=" + encodeURIComponent(text); }
+  document.querySelectorAll("[data-phone]").forEach(function (el) { el.textContent = CONFIG.phoneDisplay; });
+  document.querySelectorAll("[data-email]").forEach(function (el) { el.textContent = CONFIG.email; });
+  document.querySelectorAll("[data-wa]").forEach(function (el) { el.href = wa(el.getAttribute("data-wa")); });
+
+  /* Analytics (Firebase / GA4) - loaded only when a measurement ID is set */
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  var track = function (name, params) { if (CONFIG.measurementId) { try { gtag("event", name, params || {}); } catch (e) {} } };
+  if (CONFIG.measurementId && /^https?:$/.test(location.protocol)) {
+    var gs = document.createElement("script"); gs.async = true; gs.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(CONFIG.measurementId);
+    document.head.appendChild(gs); gtag("js", new Date()); gtag("config", CONFIG.measurementId);
+  }
+  document.querySelectorAll("[data-wa]").forEach(function (el) { el.addEventListener("click", function () { track("whatsapp_click", { page: location.pathname }); }); });
+  document.querySelectorAll('a[href="#quote"]').forEach(function (el) { el.addEventListener("click", function () { track("quote_cta_click", { page: location.pathname }); }); });
+
+  var form = document.getElementById("qform");
+  if (form) {
+    var f = {
+      service: document.getElementById("f-service"), route: document.getElementById("f-route"),
+      cargo: document.getElementById("f-cargo"), name: document.getElementById("f-name"), phone: document.getElementById("f-phone")
+    };
+    var send = document.getElementById("send-wa");
+    var preset = form.getAttribute("data-default");
+    if (preset) f.service.value = preset;
+    var compose = function () {
+      var lines = ["שלום CargoTech, אני רוצה הצעת מחיר."];
+      if (f.service.value) lines.push("שירות: " + f.service.value);
+      if (f.route.value.trim()) lines.push("מסלול: " + f.route.value.trim());
+      if (f.cargo.value.trim()) lines.push("מטען: " + f.cargo.value.trim());
+      if (f.name.value.trim()) lines.push("שם: " + f.name.value.trim());
+      if (f.phone.value.trim()) lines.push("טלפון: " + f.phone.value.trim());
+      send.href = wa(lines.join("\n"));
+    };
+    Object.keys(f).forEach(function (k) { f[k].addEventListener("input", compose); f[k].addEventListener("change", compose); });
+    form.addEventListener("submit", function (e) { e.preventDefault(); });
+    var hp = document.createElement("input"); hp.type = "text"; hp.name = "website"; hp.tabIndex = -1; hp.autocomplete = "off"; hp.setAttribute("aria-hidden", "true"); hp.style.cssText = "position:absolute;left:-9999px;width:1px;height:1px;opacity:0"; form.appendChild(hp);
+    send.addEventListener("click", function () {
+      track("generate_lead", { service: f.service.value || "none", page: location.pathname });
+      if (!CONFIG.leadApi || !/^https?:$/.test(location.protocol)) return;
+      if (!f.name.value.trim() && !f.phone.value.trim() && !f.route.value.trim() && !f.cargo.value.trim()) return;
+      try {
+        fetch(CONFIG.leadApi, { method: "POST", headers: { "Content-Type": "application/json" }, keepalive: true,
+          body: JSON.stringify({ service: f.service.value, route: f.route.value, cargo: f.cargo.value, name: f.name.value, phone: f.phone.value, page: location.pathname, website: hp.value }) }).catch(function () {});
+      } catch (e) {}
+    });
+    compose();
+    document.querySelectorAll("[data-service]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        f.service.value = btn.getAttribute("data-service");
+        compose();
+        var q = document.getElementById("quote");
+        if (q) q.scrollIntoView({ block: "center" });
+        setTimeout(function () { f.route.focus({ preventScroll: true }); }, 350);
+      });
+    });
+  }
+
+  /* Chargeable weight calculator */
+  var calc = document.getElementById("calc");
+  if (calc) {
+    var g = function (id) { return document.getElementById(id); };
+    var fmt = function (n, d) { return n.toLocaleString("he-IL", { minimumFractionDigits: 0, maximumFractionDigits: d }); };
+    var run = function () {
+      var L = parseFloat(g("c-l").value) || 0, W = parseFloat(g("c-w").value) || 0, H = parseFloat(g("c-h").value) || 0;
+      var n = parseFloat(g("c-n").value) || 0, kg = parseFloat(g("c-kg").value) || 0, div = parseFloat(g("c-div").value) || 5000;
+      var vol = L * W * H * n / div, real = kg * n, cbm = L * W * H * n / 1000000;
+      var charge = Math.max(vol, real);
+      g("r-charge").firstChild.nodeValue = fmt(charge, 1) + " ";
+      g("r-vol").textContent = fmt(vol, 1) + " ק\"ג";
+      g("r-real").textContent = fmt(real, 1) + " ק\"ג";
+      g("r-cbm").textContent = fmt(cbm, 2) + " מ\"ק";
+      var why = "מחייבים לפי המשקל האמיתי.";
+      if (vol > real) why = "מחייבים לפי המשקל הנפחי, כי המטען גדול ביחס למשקלו.";
+      if (!charge) why = "מלאו מידות ומשקל כדי לראות את התוצאה.";
+      g("r-why").textContent = why;
+      var msg = "שלום CargoTech, אני רוצה הצעת מחיר לשילוח.\nמטען: " + n + " קרטונים, " + L + "x" + W + "x" + H + " ס\"מ, " + kg + " ק\"ג לקרטון.\nמשקל מחייב מחושב: " + fmt(charge, 1) + " ק\"ג.";
+      var a = g("calc-cta"); a.href = wa(msg);
+    };
+    calc.querySelectorAll("input,select").forEach(function (el) { el.addEventListener("input", run); el.addEventListener("change", run); });
+    run();
+  }
+
+  var mn = document.querySelector(".mnav");
+  if (mn) { mn.querySelectorAll("a").forEach(function (a) { a.addEventListener("click", function () { mn.removeAttribute("open"); }); }); }
+
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    document.querySelectorAll(".routemap .pkg").forEach(function (p) { p.parentNode.removeChild(p); });
+  }
+})();
+
+/* ---------- marketing / contact banners (built in the back office, "Banners") ---------- */
+(function () {
+  if (!/^https?:$/.test(location.protocol)) return;
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var page = (location.pathname === "/" || /\/index\.html$/.test(location.pathname)) ? "home" : "all";
+  var esc = function (s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
+
+  var CSS = ".ctbn-back{position:fixed;inset:0;background:rgba(10,20,30,.42);z-index:9000;opacity:0;transition:opacity .25s}"
+    + ".ctbn-back.in{opacity:1}"
+    + ".ctbn{position:fixed;z-index:9001;background:var(--surface,#fff);color:var(--fg,#172532);border:1px solid var(--line,#dde2e6);box-shadow:0 20px 50px rgba(10,20,30,.25);border-radius:16px;max-width:380px;padding:22px 22px 20px;opacity:0}"
+    + ".ctbn.anim-in{transition:opacity .35s,transform .35s}"
+    + ".ctbn[data-t=center]{top:50%;left:50%;transform:translate(-50%,calc(-50% + 14px))}"
+    + ".ctbn[data-t=center].in{opacity:1;transform:translate(-50%,-50%)}"
+    + ".ctbn[data-t=full]{top:50%;left:50%;max-width:520px;width:92vw;transform:translate(-50%,calc(-50% + 14px))}"
+    + ".ctbn[data-t=full].in{opacity:1;transform:translate(-50%,-50%)}"
+    + ".ctbn[data-t=side]{bottom:18px;left:18px;transform:translateY(14px)}"
+    + ".ctbn[data-t=side].in{opacity:1;transform:translateY(0)}"
+    + ".ctbn[data-t=bottom]{left:0;right:0;bottom:0;max-width:none;border-radius:16px 16px 0 0;display:flex;align-items:center;gap:16px;flex-wrap:wrap;transform:translateY(100%)}"
+    + ".ctbn[data-t=bottom].in{opacity:1;transform:translateY(0)}"
+    + ".ctbn.anim-scale{transform:scale(.92)!important}.ctbn.anim-scale.in{transform:scale(1)!important}"
+    + ".ctbn.anim-slide{transform:translateX(36px)!important}.ctbn.anim-slide.in{transform:translateX(0)!important}"
+    + ".ctbn-x{position:absolute;top:8px;left:8px;width:30px;height:30px;border:0;background:none;color:var(--muted,#5a6f7e);font-size:1.3rem;line-height:1;cursor:pointer;border-radius:50%}"
+    + ".ctbn-x:hover{background:var(--bg,#f3f6f9)}"
+    + ".ctbn img{max-width:100%;border-radius:10px;margin-bottom:10px;display:block}"
+    + ".ctbn h3{margin:0 0 8px;font-size:1.2rem;font-family:var(--font-display,inherit)}"
+    + ".ctbn p{margin:0 0 14px;color:var(--muted,#5a6f7e);font-size:.98rem}"
+    + ".ctbn[data-t=bottom] h3{margin:0;font-size:1.05rem}.ctbn[data-t=bottom] p{margin:0}"
+    + ".ctbn-cta{display:inline-flex;min-height:46px;align-items:center;justify-content:center;padding:0 22px;border-radius:9px;background:var(--accent,#ff6b2c);color:var(--on-accent,#0b1f33);font-weight:800;text-decoration:none;border:0;cursor:pointer;white-space:nowrap}"
+    + ".ctbn-form{display:grid;gap:8px;margin-top:4px}"
+    + ".ctbn-form input{min-height:42px;padding:8px 10px;border:1.5px solid var(--line,#dde2e6);border-radius:8px;font:inherit}"
+    + ".ctbn-done{font-weight:700;color:var(--ok,#1f8a5b)}";
+
+  function fireEvent(id, kind) { try { fetch("/api/v1/banners/event", { method: "POST", headers: { "Content-Type": "application/json" }, keepalive: true, body: JSON.stringify({ id: id, kind: kind }) }).catch(function () {}); } catch (e) {} }
+  function seen(p) {
+    if (p.frequency === "once") return !!localStorage.getItem("ctbn_once_" + p.id);
+    if (p.frequency === "session") return !!sessionStorage.getItem("ctbn_sess_" + p.id);
+    return false;
+  }
+  function markSeen(p) {
+    if (p.frequency === "once") try { localStorage.setItem("ctbn_once_" + p.id, "1"); } catch (e) {}
+    if (p.frequency === "session") try { sessionStorage.setItem("ctbn_sess_" + p.id, "1"); } catch (e) {}
+  }
+
+  function render(p) {
+    if (seen(p)) return;
+    var st = document.createElement("style"); st.textContent = CSS; document.head.appendChild(st);
+    var back = null;
+    if (p.template === "center" || p.template === "full") { back = document.createElement("div"); back.className = "ctbn-back"; document.body.appendChild(back); }
+    var el = document.createElement("div");
+    el.className = "ctbn" + (reduceMotion ? "" : " anim-in" + (p.anim === "scale" ? " anim-scale" : p.anim === "slide-side" ? " anim-slide" : "")); el.setAttribute("data-t", p.template);
+    var ctaHtml = "";
+    if (p.ctaType === "contact") ctaHtml = '<button type="button" class="ctbn-cta" data-ctbn-contact>' + esc(p.ctaText || "יצירת קשר") + "</button>";
+    else if (p.ctaType !== "none" && p.ctaText) ctaHtml = '<a class="ctbn-cta" href="#" data-ctbn-go>' + esc(p.ctaText) + "</a>";
+    el.innerHTML = '<button type="button" class="ctbn-x" aria-label="סגירה">×</button>' +
+      (p.imageUrl ? '<img src="' + esc(p.imageUrl) + '" alt="">' : "") +
+      (p.title ? "<h3>" + esc(p.title) + "</h3>" : "") + (p.body ? "<p>" + esc(p.body) + "</p>" : "") +
+      '<div class="ctbn-body">' + ctaHtml + "</div>";
+    document.body.appendChild(el);
+    function close(kind) {
+      fireEvent(p.id, kind || "dismiss"); markSeen(p);
+      el.classList.remove("in"); if (back) back.classList.remove("in");
+      setTimeout(function () { el.remove(); if (back) back.remove(); }, reduceMotion ? 0 : 320);
+    }
+    el.querySelector(".ctbn-x").addEventListener("click", function () { close("dismiss"); });
+    if (back) back.addEventListener("click", function () { close("dismiss"); });
+    var go = el.querySelector("[data-ctbn-go]");
+    if (go) go.addEventListener("click", function (e) {
+      e.preventDefault(); fireEvent(p.id, "click");
+      if (p.ctaType === "whatsapp") { window.open("https://wa.me/" + p.ctaValue.replace(/[^\d]/g, ""), "_blank", "noopener"); }
+      else if (p.ctaType === "phone") { location.href = "tel:" + p.ctaValue; }
+      else if (p.ctaValue) { location.href = p.ctaValue; }
+    });
+    var cf = el.querySelector("[data-ctbn-contact]");
+    if (cf) cf.addEventListener("click", function () {
+      fireEvent(p.id, "click");
+      el.querySelector(".ctbn-body").innerHTML =
+        '<div class="ctbn-form"><input type="text" placeholder="שם" id="ctbn-name"><input type="tel" placeholder="טלפון" id="ctbn-phone">'
+        + '<button type="button" class="ctbn-cta" id="ctbn-send">שליחה</button></div>';
+      document.getElementById("ctbn-send").addEventListener("click", function () {
+        var name = document.getElementById("ctbn-name").value.trim(), phone = document.getElementById("ctbn-phone").value.trim();
+        if (!name && !phone) return;
+        try { fetch(CONFIG.leadApi, { method: "POST", headers: { "Content-Type": "application/json" }, keepalive: true,
+          body: JSON.stringify({ name: name, phone: phone, service: "banner", cargo: p.title, page: location.pathname, website: "" }) }).catch(function () {}); } catch (e) {}
+        el.querySelector(".ctbn-body").innerHTML = '<span class="ctbn-done">תודה! ניצור קשר בקרוב.</span>';
+        setTimeout(function () { close("click"); }, 1800);
+      });
+    });
+    requestAnimationFrame(function () { requestAnimationFrame(function () {
+      el.classList.add("in"); if (back) back.classList.add("in"); fireEvent(p.id, "show");
+    }); });
+  }
+
+  fetch("/api/v1/banners/active?page=" + page).then(function (r) { return r.json(); }).then(function (j) {
+    if (!j || !j.ok || !j.banner) return;
+    var p = j.banner;
+    setTimeout(function () { render(p); }, Math.max(0, (p.delaySec || 0) * 1000));
+  }).catch(function () {});
+})();
+</script><script>
+(function () {
+  var CT = window.CT = window.CT || {};
+  var listeners = [], SDK = "https://www.gstatic.com/firebasejs/10.14.1/", fb = null;
+  CT.user = null; CT.ready = false;
+  var isLocal = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+  function emit() { listeners.forEach(function (f) { try { f(CT.user); } catch (e) {} }); }
+  CT.onAuth = function (f) { listeners.push(f); if (CT.ready) f(CT.user); };
+  CT.init = function () {
+    if (CT._p) return CT._p;
+    CT._p = (async function () {
+      if (isLocal) { var tu = null; try { tu = localStorage.getItem("ct_test_user"); } catch (e) {} if (tu) { CT.user = { uid: tu, email: tu + "@example.com", test: true }; CT.ready = true; emit(); return; } }
+      try {
+        var cfg = await (await fetch("/__/firebase/init.json")).json();
+        if (!cfg || !cfg.apiKey) throw new Error("no config");
+        var app = await import(SDK + "firebase-app.js"), au = await import(SDK + "firebase-auth.js");
+        var a = app.initializeApp(cfg, "cargotech"), auth = au.getAuth(a); auth.languageCode = "he";
+        fb = { au: au, auth: auth };
+        au.onAuthStateChanged(auth, function (u) { CT.user = u ? { uid: u.uid, email: u.email || "", name: u.displayName || "", emailVerified: u.emailVerified, fb: u } : null; CT.ready = true; emit(); });
+        /* staff "log in as this customer" link: ?as=<one-time custom token>. Sign in with it once, then drop it
+           from the address bar immediately so it doesn't linger visibly in the URL or browser history. */
+        var asTok = new URLSearchParams(location.search).get("as");
+        if (asTok) {
+          var url = new URL(location.href); url.searchParams.delete("as"); history.replaceState(null, "", url);
+          try { await au.signInWithCustomToken(auth, asTok); } catch (e) { /* expired or already used; user just stays signed out */ }
+        }
+      } catch (e) { CT.failed = true; CT.ready = true; emit(); }
+    })();
+    return CT._p;
+  };
+  CT.token = async function () {
+    if (CT.user && CT.user.test) return "test:" + CT.user.uid;
+    if (CT.user && CT.user.fb) { try { return await CT.user.fb.getIdToken(); } catch (e) { return null; } }
+    return null;
+  };
+  CT.api = async function (method, path, body, headers) {
+    var h = { "Content-Type": "application/json" }; Object.keys(headers || {}).forEach(function (k) { h[k] = headers[k]; });
+    if (!h.Authorization) { var t = await CT.token(); if (t) h.Authorization = "Bearer " + t; }
+    var r, j = {};
+    try { r = await fetch("/api/v1" + path, { method: method, headers: h, body: body && method !== "GET" ? JSON.stringify(body) : undefined }); } catch (e) { return { ok: false, error: "network", _status: 0 }; }
+    try { j = await r.json(); } catch (e) { j = { ok: false }; }
+    j._status = r.status; return j;
+  };
+  var MSG = { "auth/invalid-credential": "אימייל או סיסמה שגויים.", "auth/wrong-password": "אימייל או סיסמה שגויים.", "auth/user-not-found": "אימייל או סיסמה שגויים.",
+    "auth/email-already-in-use": "האימייל הזה כבר רשום. נסו להתחבר.", "auth/weak-password": "הסיסמה חלשה מדי. השתמשו ב-6 תווים לפחות.", "auth/invalid-email": "כתובת האימייל לא תקינה.",
+    "auth/too-many-requests": "יותר מדי נסיונות. נסו שוב בעוד כמה דקות.", "auth/network-request-failed": "אין חיבור לרשת. נסו שוב." };
+  CT.errText = function (e) { return MSG[e && e.code] || "משהו השתבש. נסו שוב."; };
+  function need() { if (!fb) throw { code: "auth/network-request-failed" }; return fb; }
+  CT.signIn = async function (m, p) { var f = need(); return f.au.signInWithEmailAndPassword(f.auth, m, p); };
+  CT.signUp = async function (m, p) { var f = need(); return f.au.createUserWithEmailAndPassword(f.auth, m, p); };
+  CT.google = async function () { var f = need(); return f.au.signInWithPopup(f.auth, new f.au.GoogleAuthProvider()); };
+  CT.reset = async function (m) { var f = need(); return f.au.sendPasswordResetEmail(f.auth, m); };
+  CT.verifyMail = async function () { var f = need(); return f.au.sendEmailVerification(f.auth.currentUser); };
+  CT.signOut = async function () { if (CT.user && CT.user.test) { try { localStorage.removeItem("ct_test_user"); } catch (e) {} CT.user = null; emit(); return; } var f = need(); return f.au.signOut(f.auth); };
+
+  /* sign-in dialog */
+  CT.openAuth = function (tab) {
+    var d = document.getElementById("authdlg"); if (!d) return;
+    setTab(tab || "in"); if (!d.open) d.showModal();
+  };
+  function setTab(t) {
+    document.querySelectorAll("#authdlg .atabs button").forEach(function (b) { var on = b.getAttribute("data-t") === t; b.classList.toggle("on", on); b.setAttribute("aria-selected", on); });
+    document.getElementById("auth-in").hidden = t !== "in"; document.getElementById("auth-up").hidden = t !== "up";
+  }
+  document.addEventListener("DOMContentLoaded", function () {
+    var d = document.getElementById("authdlg"); if (!d) return;
+    var $ = function (id) { return document.getElementById(id); };
+    var say = function (id, m) { var e = $(id); e.textContent = m || ""; e.hidden = !m; };
+    d.querySelectorAll(".atabs button").forEach(function (b) { b.addEventListener("click", function () { setTab(b.getAttribute("data-t")); }); });
+    $("auth-x").addEventListener("click", function () { d.close(); });
+    $("auth-in").addEventListener("submit", async function (e) {
+      e.preventDefault(); say("ai-err", "");
+      try { await CT.init(); await CT.signIn($("ai-mail").value.trim(), $("ai-pw").value); $("ai-pw").value = ""; d.close(); } catch (x) { say("ai-err", CT.errText(x)); }
+    });
+    $("ai-forgot").addEventListener("click", async function () {
+      var m = $("ai-mail").value.trim(); if (!m) { say("ai-err", "כתבו את האימייל ואז לחצו שוב על שכחתי סיסמה."); return; }
+      try { await CT.init(); await CT.reset(m); say("ai-err", "שלחנו קישור לאיפוס הסיסמה לאימייל."); } catch (x) { say("ai-err", CT.errText(x)); }
+    });
+    $("auth-up").addEventListener("submit", async function (e) {
+      e.preventDefault(); say("au-err", "");
+      var m = $("au-mail").value.trim(), p = $("au-pw").value;
+      if (!$("au-fn").value.trim() || !m) return say("au-err", "מלאו שם ואימייל.");
+      if (p.length < 6) return say("au-err", "הסיסמה צריכה להיות באורך 6 תווים לפחות.");
+      if (p !== $("au-pw2").value) return say("au-err", "הסיסמאות אינן זהות.");
+      if (!$("au-use").value) return say("au-err", "בחרו שימוש פרטי או עסק.");
+      try {
+        await CT.init();
+        var cred = await CT.signUp(m, p);
+        /* the global sign-in state (CT.user) is set by an async onAuthStateChanged callback that can still be
+           in flight right after signUp() resolves; asking it for a token here would race it and silently send
+           this request with no Authorization header. Get the token straight from the fresh credential instead. */
+        var tok = await cred.user.getIdToken();
+        var pr = await CT.api("PUT", "/me", { firstName: $("au-fn").value, lastName: $("au-ln").value, phone: $("au-ph").value, useFor: $("au-use").value, marketing: $("au-mk").checked }, { Authorization: "Bearer " + tok });
+        if (!pr.ok) { say("au-err", "החשבון נוצר, אך הפרטים (שם/טלפון) לא נשמרו. אפשר להשלים אותם ב\"האזור האישי\" אחרי ההתחברות."); }
+        var cp = $("au-cp").value.trim();
+        if (cp) { try { await CT.api("POST", "/coupon/redeem", { code: cp }, { Authorization: "Bearer " + tok }); } catch (e) { /* invalid/expired code: signup still succeeds, just no discount */ } }
+        $("au-pw").value = ""; $("au-pw2").value = ""; d.close();
+        if (CT.afterSignUp) CT.afterSignUp();
+      } catch (x) { say("au-err", CT.errText(x)); }
+    });
+    $("auth-g").addEventListener("click", async function () {
+      try { await CT.init(); await CT.google(); d.close(); } catch (x) { if (!x || x.code !== "auth/popup-closed-by-user") say(!$("auth-in").hidden ? "ai-err" : "au-err", CT.errText(x)); }
+    });
+  });
+})();
+</script><script>
+(function(){var CT=window.CT;if(!CT)return;
+function paint(u){document.querySelectorAll("[data-authbtn]").forEach(function(a){var b=a.querySelector("b")||a;b.textContent=u?"האזור שלי":"התחברות / הרשמה";a.setAttribute("data-in",u?"1":"");});}
+document.addEventListener("click",function(e){var a=e.target.closest("[data-authbtn]");if(!a)return;if(a.getAttribute("data-in"))return;if(!document.getElementById("authdlg"))return;e.preventDefault();var d=document.querySelector("details.mnav");if(d)d.open=false;CT.init().then(function(){CT.openAuth("in");});});
+var reg={};CT.onAuth(function(u){paint(u);if(u&&!reg[u.uid]){reg[u.uid]=1;CT.api("GET","/me");}});CT.init();})();
+</script>
